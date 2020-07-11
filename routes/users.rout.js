@@ -1,0 +1,13 @@
+const express = require('express');
+const controller = require('../controllers/users.controller');
+
+const router = express.Router();
+const isAuth = require("../middlewares/isAuth");
+
+router.post('/login', controller.login);
+router.post('/register', controller.register);
+router.post('/seedUsers', isAuth, controller.seedUsers);
+router.post('/deleteUsers', isAuth, controller.removeAllUsersFromDb);
+
+
+module.exports = router
