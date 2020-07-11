@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": "nodemon bin/www.js",
     "start": "node bin/www.js",
-    "clear images": "rm -rf uploads"
+    "clear-images": "rm -rf uploads",
+    "clean": "rm -rf node_modules",
+    "reinstall": "npm run clean && npm install"
   },
   "repository": {
     "type": "git",
