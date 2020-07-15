@@ -80,10 +80,12 @@ exports.register = async (req, res, next) => {
         });
         await newUser.save();
 
+        const expiresTimeInMiliseconds = 1000 * 60 * 60;
         const token = getToken(email);
         return res.status(200).json({
             message: `User: ${email} created successfully.`,
             token: token,
+            expiresTimeInMiliseconds: expiresTimeInMiliseconds
         });
     } catch (err) {
         err.message = err.message || "There was a problem with createing this new order.";
