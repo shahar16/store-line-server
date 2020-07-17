@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+//const Product = require('./product.model');
 
 
 const storeSchema = new Schema(
@@ -25,16 +26,9 @@ const storeSchema = new Schema(
 			required: true
 		},
 		products: {
-			type: Object,
-			required: true
+			type: [String],
+			required: false
 		},
-		/**
-		 * Object: {
-		 *     mail: string,
-		 *     phoneL string,
-		 *     address: strung (optional)
-		 * }
-		 */
 		contact: {
 			type: Object,
 			required: true
