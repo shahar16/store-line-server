@@ -6,11 +6,12 @@ let usersDb = [];
 firstNames.forEach( ( firatName ) => {
 	lastNames.forEach( ( lastName ) => {
 		let user = {
-			email:     `${firatName}.${lastName}@gmail.com`,
-			password:  password,
-			firstName: firatName,
-			lastName:  lastName,
-			cart:      {}
+			email:       `${firatName}.${lastName}@gmail.com`,
+			password:    password,
+			firstName:   firatName,
+			lastName:    lastName,
+			ownedStores: [],
+			cart:        {}
 		}
 		usersDb.push( user );
 	} );
