@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const storeSchema = new Schema(
 	{
-		storeId: {
+		storeID: {
 			type: String,
 			required: true
 		},
@@ -25,16 +25,9 @@ const storeSchema = new Schema(
 			required: true
 		},
 		products: {
-			type: Object,
-			required: true
+			type: [Object],
+			required: false
 		},
-		/**
-		 * Object: {
-		 *     mail: string,
-		 *     phoneL string,
-		 *     address: strung (optional)
-		 * }
-		 */
 		contact: {
 			type: Object,
 			required: true

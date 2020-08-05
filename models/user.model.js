@@ -1,18 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Cart = require('./cart.model');
 
 
 const userSchema = new Schema(
     {
-        email: {
-            type: String,
-            required: true
-        },
-
-        password: {
-            type: String,
-            required: true
-        },
         firstName: {
             type: String,
             required: true
@@ -21,6 +13,22 @@ const userSchema = new Schema(
             type: String,
             required: true
         },
+        email: {
+            type: String,
+            required: true
+        },
+        password: {
+            type: String,
+            required: true
+        },
+        ownedStores: {
+            type: [String], //type: [Store]
+            required: false
+        },
+        cart: {
+            type: Object,
+            require: false
+        }
     },
     { timestamps: true }
 );
