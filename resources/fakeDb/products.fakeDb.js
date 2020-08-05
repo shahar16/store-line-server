@@ -20,7 +20,7 @@ productNames.forEach( ( productName, index ) => {
 		let product = {
 			name:    productName,
 			desc:    desc,
-			price:   ( index * 100 ),
+			price:   ( (index + 1) * 100 ),
 			sn:      index,
 			image:   `${imagesPrefix}pic${index}.jpg`,
 			storeID: storeId

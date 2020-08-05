@@ -9,15 +9,6 @@ const productsDb = require( "./products.fakeDb" );
 const storesDb = require( "./stores.fakeDb" );
 const fakeDb = {}
 
-storesDb.forEach( ( store ) => {
-	const owner = store.owner;
-	usersDb.forEach( ( user ) => {
-		if ( user.email === owner ) {
-			user.ownedStores.push( store );
-		}
-	} );
-} );
-
 fakeDb["users"] = usersDb;
 fakeDb["products"] = productsDb;
 fakeDb["stores"] = storesDb;
