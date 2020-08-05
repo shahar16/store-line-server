@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-//const Product = require('./product.model');
 
 
 const storeSchema = new Schema(
 	{
-		storeId: {
+		storeID: {
 			type: String,
 			required: true
 		},
@@ -26,7 +25,7 @@ const storeSchema = new Schema(
 			required: true
 		},
 		products: {
-			type: [String],
+			type: [Object],
 			required: false
 		},
 		contact: {

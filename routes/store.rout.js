@@ -1,16 +1,18 @@
 const express = require('express');
-const controller = require('../controllers/store.controller');
+const storeController = require('../controllers/store.controller');
+const productController = require('../controllers/product.controller');
+
 
 const router = express.Router();
 const isAuth = require("../middlewares/isAuth");
 
 //TODO: add isAuth
-router.post('/addStore', controller.addStore);
-router.post('/deleteStore', controller.deleteStore);
-router.post('/editStore', controller.editStore);
-router.post('/addProduct', controller.addProduct);
-router.post('/deleteProduct', controller.DeleteSingleProduct);
-router.post('/deleteAllProducts', controller.deleteAllProductsFromStore);
+router.post('/addStore', storeController.addStore);
+router.post('/deleteStore', storeController.deleteStore);
+router.post('/editStore', storeController.editStore);
+router.post('/addProduct', productController.addNewProduct, storeController.addProductToStore);
+router.post('/deleteProduct', storeController.DeleteSingleProduct);
+router.post('/deleteAllProducts', storeController.deleteAllProductsFromStore);
 
 
 module.exports = router
