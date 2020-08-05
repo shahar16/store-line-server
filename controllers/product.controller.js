@@ -7,19 +7,24 @@ exports.getTestProduct = async (req, res, next) => {
 		const productItemExists = await Product.findOne({ sn: req.query.sn });
 		if (productItemExists) {
 			const {
-				name,
-				image,
-				desc,
-				price,
-				sn
-			} = productItemExists
-			return res.status(200).json({
-				name: name,
+
+					  id,
+					  name,
+					  image,
+					  desc,
+					  price,
+					  sn
+				  } = productItemExists
+			return res.status( 200 ).json( {
+				id:    id,
+				name:  name,
 				image: image,
-				desc: desc,
+				desc:  desc,
 				price: price,
-				sn: sn
-			});
+
+				sn:    sn
+			} );
+
 		} else {
 			throw new Error("Product not exist!");
 		}
@@ -34,25 +39,28 @@ exports.addProduct = async (req, res, next) => {
 			throw new Error("Request body is empty.");
 		}
 
-		if (!req.file) {
-			throw new Error("Image did not received.")
+
+		if ( !req.file ) {
+			throw new Error( "Image did not received." )
+
 		}
 
 		const {
-			sn,
-			price,
-			desc,
-			name
-		} = req.body;
+				  sn,
+				  price,
+				  desc,
+				  name
+			  } = req.body;
 		const image = req.file.path;
 
-		const productItemExists = await Product.findOne({ sn: sn });
-		if (!productItemExists) {
-			const newProduct = new Product({
-				sn: sn,
-				name: name,
+
+		const productItemExists = await Product.findOne( { sn: sn } );
+		if ( !productItemExists ) {
+			const newProduct = new Product( {
+				sn:    sn,
+				name:  name,
 				price: price,
-				desc: desc,
+				desc:  desc,
 				image: image
 			});
 			await newProduct.save();
@@ -144,13 +152,14 @@ exports.editProduct = async (req, res, next) => {
 			throw new Error("Request body is empty.");
 		}
 		const {
-			sn,
-			image,
-			price,
-			desc,
-			name
-		} = req.body;
-		console.log(`Login:: name:  ${name}
+
+				  sn,
+				  image,
+				  price,
+				  desc,
+				  name
+			  } = req.body;
+		console.log( `Login:: name:  ${name}
 price: ${price}
 desc:  ${desc}
 sn:    ${sn}`);
@@ -186,13 +195,18 @@ exports.deleteProduct = async (req, res, next) => {
 			throw new Error("Request body is empty.");
 		}
 		const {
-			sn,
-			storeID,
-			name,
-			desc,
-			price,
-			image
-		} = req.body;
+
+				  sn,
+				  image,
+				  price,
+				  desc,
+				  name
+			  } = req.body;
+		console.log( `Login:: name:  ${name}
+price: ${price}
+desc:  ${desc}
+sn:    ${sn}` );
+
 
 		//const image = req.file.path;
 
