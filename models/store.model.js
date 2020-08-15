@@ -30,7 +30,7 @@ const storeSchema = new Schema(
 		},
 		contact: {
 			type: Object,
-			required: true
+			required: false
 		}
 	},
 	{ timestamps: true }

@@ -1,4 +1,5 @@
-const productNames = [ "Computer", "Keybord", "Mouse", "Speaker", "Screen", "Tent", "Pizza", "Iphone" ];
+const productNames = ["Computer", "Keybord", "Mouse", "Speaker", "Screen", "Tent", "Pizza", "Iphone"];
+
 const productsDesc = [
 	"This is the first description",
 	"This is the second description, its a little bit longer",
@@ -12,21 +13,25 @@ const productsDesc = [
 const imagesPrefix = "uploads/images/"
 let productsDb = [];
 let numOfStores = 25;
+let counter = 1;
 let storeId;
 
-productNames.forEach( ( productName, index ) => {
-	productsDesc.forEach( ( desc ) => {
-		storeId = Math.floor( Math.random() * 1000 ) % numOfStores + 1;
+productNames.forEach((productName, index) => {
+	productsDesc.forEach((desc) => {
+		storeId = counter;
 		let product = {
-			name:    productName,
-			desc:    desc,
-			price:   ( (index + 1) * 100 ),
-			sn:      index,
-			image:   `${imagesPrefix}pic${index}.jpg`,
+			name: productName,
+			desc: desc,
+			price: ((index + 1) * 100),
+			sn: index,
+			image: `${imagesPrefix}pic${index}.jpg`,
 			storeID: storeId
 		}
-		productsDb.push( product );
-	} );
-} );
+		if (++counter > numOfStores) {
+			counter = 1;
+		}
+		productsDb.push(product);
+	});
+});
 
 module.exports = productsDb
