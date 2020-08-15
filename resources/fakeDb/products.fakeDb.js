@@ -1,4 +1,5 @@
 const productNames = ["Computer", "Keybord", "Mouse", "Speaker", "Screen", "Tent", "Pizza", "Iphone"];
+
 const productsDesc = [
 	"This is the first description",
 	"This is the second description, its a little bit longer",

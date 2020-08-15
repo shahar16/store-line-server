@@ -8,7 +8,6 @@ exports.getTestProduct = async (req, res, next) => {
 		const productItemExists = await Product.findOne({ sn: req.query.sn });
 		if (productItemExists) {
 			const {
-
 				id,
 				name,
 				image,
@@ -20,9 +19,8 @@ exports.getTestProduct = async (req, res, next) => {
 				id: id,
 				name: name,
 				image: image,
-				desc: desc,
+				desc:  desc,
 				price: price,
-
 				sn: sn
 			});
 
@@ -40,20 +38,17 @@ exports.addProduct = async (req, res, next) => {
 			throw new Error("Request body is empty.");
 		}
 
-
 		if (!req.file) {
 			throw new Error("Image did not received.")
-
 		}
 
 		const {
-			sn,
-			price,
-			desc,
-			name
-		} = req.body;
+				  sn,
+				  price,
+				  desc,
+				  name
+			  } = req.body;
 		const image = req.file.path;
-
 
 		const productItemExists = await Product.findOne({ sn: sn });
 		if (!productItemExists) {
@@ -61,7 +56,7 @@ exports.addProduct = async (req, res, next) => {
 				sn: sn,
 				name: name,
 				price: price,
-				desc: desc,
+				desc:  desc,
 				image: image
 			});
 			await newProduct.save();
