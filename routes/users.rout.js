@@ -8,6 +8,8 @@ router.post('/login', controller.login);
 router.post('/register', controller.register);
 router.post('/seedUsers', isAuth, controller.seedUsers);//router.post('/deleteUsers', isAuth, controller.removeAllUsersFromDb);
 router.post('/deleteUsers', controller.removeAllUsersFromDb);
+router.post('/addDbUsers', controller.addDbUsers);
+//TODO: deleteuser -> deleteStore -> deleteProductsInStore
 
 
 

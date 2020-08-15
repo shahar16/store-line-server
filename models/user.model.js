@@ -22,8 +22,10 @@ const userSchema = new Schema(
             required: true
         },
         ownedStores: {
-            type: [String], //type: [Store]
-            required: false
+            type: [Object], //type: [Store]
+            required: false,
+            storeName: String,
+            storeID: String
         },
         cart: {
             type: Object,
