@@ -80,9 +80,9 @@ exports.addNewProduct = async (req, res, next) => {
 			throw new Error("Request body is empty.");
 		}
 
-		// if (!req.file) {
-		// 	throw new Error("Image did not received.")
-		// }
+		if (!req.file) {
+			throw new Error("Image did not received.")
+		}
 
 		const {
 			sn,
@@ -90,11 +90,11 @@ exports.addNewProduct = async (req, res, next) => {
 			name,
 			desc,
 			price,
-			image,
-			stock
+			stock,
+			fakeDB
 		} = req.body;
 
-		//const image = req.file.path;
+		const image = fakeDB? req.file.path : null;
 
 		const productDBObj = await Product.findOne({
 			sn: sn,
@@ -311,6 +311,8 @@ exports.addAllDBProducts = async (req, res, next) => {
 		let i = 1;
 		await appDB["products"].forEach((singleProduct) => {
 			req.body = singleProduct;
+			req.file = {};
+			req.file.path = singleProduct.image;
 			this.addNewProduct(req, res, next);
 			console.log(`${fn}: ${i}`);
 			i++;

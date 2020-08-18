@@ -19,13 +19,19 @@ let storeId;
 productNames.forEach((productName, index) => {
 	productsDesc.forEach((desc) => {
 		storeId = counter;
+		let images = [
+			`${imagesPrefix}pic${index % 8 + 1}.jpg`,
+			`${imagesPrefix}pic${( index + 1 ) % 8 + 1}.jpg`,
+			`${imagesPrefix}pic${( index + 2 ) % 8 + 1}.jpg`
+		]
 		let product = {
 			name: productName,
 			desc: desc,
 			price: ((index + 1) * 100),
 			sn: index,
-			image: `${imagesPrefix}pic${index}.jpg`,
-			storeID: storeId
+			image: images,
+			storeID: storeId,
+			fakeDB: true
 		}
 		if (++counter > numOfStores) {
 			counter = 1;
