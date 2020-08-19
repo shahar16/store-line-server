@@ -4,6 +4,8 @@ const Product = require('../models/product.model');
 const User = require('../models/user.model');
 const CTRL_NAME = "store.controller";
 const appDB = require('../resources/fakeDb/fakeDb');
+const { v4: uuidv4 } = require('uuid');
+
 
 exports.addNewStore = async (req, res, next) => {
 
@@ -14,34 +16,41 @@ exports.addNewStore = async (req, res, next) => {
 			throw new Error("Request body is empty.");
 		}
 
+		if ( !req.files ) {
+			throw new Error( "Image did not received." )
+		}
+
+		const storeID = uuidv4();
 		const {
-			storeID,
 			name,
 			owner,
 			desc,
-			logo,
 			contact,
-		} = req.body;
+			fakeDB
+		} = req.body
+		console.log(req.id);
+		const contactAsJson = JSON.parse(contact);
+		const image = fakeDB ? req.file.path : req.files.map( file => file.path );
 
 		const storeDBObj = await Store.findOne({ storeID: storeID });
 		const userDBObj = await User.findOne({ email: owner });
 
 		if (storeDBObj) {
-			next(new Error(`${fn}: Store already exists!`));
+			throw new Error(`${fn}: Store already exists!`);
 		}
 
 		if (!userDBObj) {
-			next(new Error(`${fn}: store owner doesn't exist!`));
+			throw new Error(`${fn}: store owner doesn't exist!`);
 		}
 
 		const newStoreInDB = new Store({
-			storeID: storeID,
-			name: name,
-			owner: owner,
-			desc: desc,
-			logo: logo,
+			storeID:  storeID,
+			name:     name,
+			owner:    owner,
+			desc:     desc,
+			image:     image,
 			products: [],
-			contact: contact
+			contact:  contactAsJson
 		});
 		await newStoreInDB.save();
 
@@ -60,6 +69,7 @@ exports.addNewStore = async (req, res, next) => {
 			` + storeDetailsMsg);
 			next();
 		} else {
+			console.log("sssss")
 			return res.status(200).json({
 				message: `${fn}: new store created successfully!
 			store details:
@@ -442,6 +452,8 @@ exports.addDbStores = async (req, res, next) => {
 		await appDB["stores"].forEach((singleStore) => {
 			req.body = singleStore;
 			req.mode = "db"
+			req.file = {};
+			req.file.path = singleStore.image;
 			this.addNewStore(req, res, next);
 		});
 

@@ -13,14 +13,20 @@ let counter = 1;
 
 storesNames.forEach( ( productName, index ) => {
 	storesDesc.forEach( ( desc ) => {
+		let images = [
+			`${imagesPrefix}pic${index % 8 + 1}.jpg`,
+			`${imagesPrefix}pic${( index + 1 ) % 8 + 1}.jpg`,
+			`${imagesPrefix}pic${( index + 2 ) % 8 + 1}.jpg`
+		]
 		let store = {
 			storeID:  counter,
 			name:     productName,
 			owner:    usersDb[counter].email,
 			desc:     desc,
-			logo:     `${imagesPrefix}pic${index}.jpg`,
+			image:     images,
 			products: {},
-			contact:  {}
+			contact:  {},
+			fakeDB: true
 		}
 		counter++;
 		storesDb.push( store );

@@ -20,8 +20,8 @@ const storeSchema = new Schema(
 			type: String,
 			required: true
 		},
-		logo: {
-			type: String,
+		image: {
+			type: [String],
 			required: true
 		},
 		products: {
