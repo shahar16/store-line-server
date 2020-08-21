@@ -20,19 +20,21 @@ exports.addNewStore = async (req, res, next) => {
 			throw new Error( "Image did not received." )
 		}
 
-		const storeID = uuidv4();
+
 		const {
 			name,
+			storeID,
 			owner,
 			desc,
 			contact,
 			fakeDB
 		} = req.body
+		const newStoreID = fakeDB ? storeID :uuidv4();
 		console.log(req.id);
-		const contactAsJson = JSON.parse(contact);
+		const contactAsJson = fakeDB ? contact : JSON.parse(contact);
 		const image = fakeDB ? req.file.path : req.files.map( file => file.path );
 
-		const storeDBObj = await Store.findOne({ storeID: storeID });
+		const storeDBObj = await Store.findOne({ storeID: newStoreID });
 		const userDBObj = await User.findOne({ email: owner });
 
 		if (storeDBObj) {
@@ -44,7 +46,7 @@ exports.addNewStore = async (req, res, next) => {
 		}
 
 		const newStoreInDB = new Store({
-			storeID:  storeID,
+			storeID:  newStoreID,
 			name:     name,
 			owner:    owner,
 			desc:     desc,
@@ -136,6 +138,7 @@ exports.editStoreDetails = async (req, res, next) => {
 	const fn = CTRL_NAME + '::editStoreDetails';
 
 	try {
+		let updateImages = Object.entries(req.files).length === 0 ? false :true;
 		if (Object.entries(req.body).length === 0) {
 			throw new Error("Request body is empty.");
 		}
@@ -145,21 +148,25 @@ exports.editStoreDetails = async (req, res, next) => {
 			name,
 			owner,
 			desc,
-			logo,
 			contact,
 		} = req.body;
+
+		const contactAsJson = JSON.parse(contact);
+
 
 		const storeDBObj = await Store.findOne({ storeID: storeID });
 
 		if (!storeDBObj) {
 			next(new Error(`Store ${name} did not exists in DB`));
 		} else {
+			const image = updateImages ? req.files.map( file => file.path ) : storeDBObj.image;
+			console.log(image);
 			await storeDBObj.updateOne({
 				name: name,
 				owner: owner,
 				desc: desc,
-				logo: logo,
-				contact: contact
+				image: image,
+				contact: contactAsJson
 			})
 
 			const storeDetailsMsg = `storeID: ${storeDBObj.storeID}
@@ -176,9 +183,10 @@ exports.editStoreDetails = async (req, res, next) => {
 		}
 	} catch (err) {
 		err.message = `${fn}: ` +
-			(err.message || "Failed to update store details!");
+			(err.message || "Failed to update store details");
 		next(err);
 	}
+
 }
 
 exports.addProductToStore = async (req, res, next) => {
@@ -453,6 +461,7 @@ exports.addDbStores = async (req, res, next) => {
 			req.body = singleStore;
 			req.mode = "db"
 			req.file = {};
+			req.files = {};
 			req.file.path = singleStore.image;
 			this.addNewStore(req, res, next);
 		});

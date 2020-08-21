@@ -309,6 +309,7 @@ exports.addAllDBProducts = async ( req, res, next ) => {
 		let i = 1;
 		await appDB["products"].forEach( ( singleProduct ) => {
 			req.body = singleProduct;
+			req.files = {}
 			req.file = {};
 			req.file.path = singleProduct.image;
 			this.addNewProduct( req, res, next );
