@@ -71,7 +71,6 @@ exports.addNewStore = async (req, res, next) => {
 			` + storeDetailsMsg);
 			next();
 		} else {
-			console.log("sssss")
 			return res.status(200).json({
 				message: `${fn}: new store created successfully!
 			store details:
