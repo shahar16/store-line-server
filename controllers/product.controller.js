@@ -2,33 +2,38 @@
 const Product = require("../models/product.model");
 const CTRL_NAME = "product.controller";
 const appDB = require('../resources/fakeDb/fakeDb');
+let ALL_PRODUCTS = [];
+let ALL_PRODUCTS_LENGTH = 0;
 
-exports.getTestProduct = async (req, res, next) => {
+exports.getHomePageProducts = async (req, res, next) => {
 	try {
-		const productItemExists = await Product.findOne({ sn: req.query.sn });
-		if (productItemExists) {
-			const {
-				id,
-				name,
-				image,
-				desc,
-				price,
-				sn
-			} = productItemExists
-			return res.status(200).json({
-				id: id,
-				name: name,
-				image: image,
-				desc:  desc,
-				price: price,
-				sn: sn
-			});
-
-		} else {
-			throw new Error("Product not exist!");
+		if (ALL_PRODUCTS_LENGTH < 20) {
+			console.log("initiate.........................");
+			ALL_PRODUCTS_LENGTH = [];
+			let products = await Product.find();
+			ALL_PRODUCTS = products;
+			ALL_PRODUCTS_LENGTH = ALL_PRODUCTS.length;
 		}
+		console.log(ALL_PRODUCTS_LENGTH);
+		let homePageProducts = [];
+		let newLength = ALL_PRODUCTS_LENGTH;
+
+		for (let i = 0; i < 20 && i < ALL_PRODUCTS_LENGTH; i++) {
+			let rndNum = getRandomInt(0, newLength - 1);
+			homePageProducts.push(ALL_PRODUCTS[rndNum]);
+			let tmp = ALL_PRODUCTS[rndNum];
+			ALL_PRODUCTS[rndNum] = ALL_PRODUCTS[ALL_PRODUCTS_LENGTH - 1];
+			ALL_PRODUCTS[newLength - 1] = tmp;
+			newLength--;
+		}
+		ALL_PRODUCTS_LENGTH = newLength;
+		console.log("ALL_PRODUCTS_LENGTH: " + ALL_PRODUCTS_LENGTH);
+		console.log(homePageProducts);
+		return res.send(JSON.stringify(homePageProducts));
+
 	} catch (err) {
 		err.message = err.message || "There was a problem with product creation";
+		console.log(err);
 		next(err);
 	}
 }
@@ -43,11 +48,11 @@ exports.addProduct = async (req, res, next) => {
 		}
 
 		const {
-				  sn,
-				  price,
-				  desc,
-				  name
-			  } = req.body;
+			sn,
+			price,
+			desc,
+			name
+		} = req.body;
 		const image = req.file.path;
 
 		const productItemExists = await Product.findOne({ sn: sn });
@@ -56,7 +61,7 @@ exports.addProduct = async (req, res, next) => {
 				sn: sn,
 				name: name,
 				price: price,
-				desc:  desc,
+				desc: desc,
 				image: image
 			});
 			await newProduct.save();
@@ -324,4 +329,10 @@ exports.addAllDBProducts = async (req, res, next) => {
 
 		next(err);
 	}
+}
+
+function getRandomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
