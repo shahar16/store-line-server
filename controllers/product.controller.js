@@ -2,8 +2,10 @@
 const Product = require("../models/product.model");
 const CTRL_NAME = "product.controller";
 const appDB = require('../resources/fakeDb/fakeDb');
+
 let ALL_PRODUCTS = [];
 let ALL_PRODUCTS_LENGTH = 0;
+
 
 exports.getHomePageProducts = async (req, res, next) => {
 	try {
@@ -13,6 +15,7 @@ exports.getHomePageProducts = async (req, res, next) => {
 			let products = await Product.find();
 			ALL_PRODUCTS = products;
 			ALL_PRODUCTS_LENGTH = ALL_PRODUCTS.length;
+
 		}
 		console.log(ALL_PRODUCTS_LENGTH);
 		let homePageProducts = [];
