@@ -25,7 +25,7 @@ exports.getHomePageProducts = async (req, res, next) => {
 			let rndNum = getRandomInt(0, newLength - 1);
 			homePageProducts.push(ALL_PRODUCTS[rndNum]);
 			let tmp = ALL_PRODUCTS[rndNum];
-			ALL_PRODUCTS[rndNum] = ALL_PRODUCTS[ALL_PRODUCTS_LENGTH - 1];
+			ALL_PRODUCTS[rndNum] = ALL_PRODUCTS[newLength - 1];
 			ALL_PRODUCTS[newLength - 1] = tmp;
 			newLength--;
 		}
