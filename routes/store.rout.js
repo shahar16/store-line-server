@@ -14,7 +14,7 @@ const { route } = require('./users.rout');
 router.post('/addStore', isAuth, uploadImages,  storeController.addNewStore);
 router.post('/deleteStore', isAuth, productController.deleteAllProductsBelongsToStore, storeController.deleteStore);
 router.post('/editStore',isAuth, uploadImages, storeController.editStoreDetails);
-router.post('/addProduct', dummyIsAuth, uploadImages, productController.addNewProduct, storeController.addProductToStore);
+router.post('/addProduct', isAuth, uploadImages, productController.addNewProduct, storeController.addProductToStore);
 router.post('/deleteProduct', storeController.deleteProduct, productController.deleteProduct,);
 router.post('/editProduct', productController.editProduct, storeController.updateProduct);
 router.post('/deleteAllProducts', storeController.deleteAllProductsFromStore);
