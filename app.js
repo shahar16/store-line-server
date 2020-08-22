@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/users", users);
-//app.use("/products", products);
+app.use("/products", products);
 app.use("/store", Store);
 app.use("/testEnv", TestEnv);
 
