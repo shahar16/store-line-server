@@ -501,6 +501,23 @@ exports.deleteDbStores = async (req, res, next) => {
 	}
 }
 
+exports.getStoresByUser = async (req, res, next) => {
+	try {
+		const email = req.userEmail;
+
+		const user = await User.findOne({ email: email });
+		if (!user) {
+			throw new Error(`User: ${email} did not exists`);
+		}
+		const stores = await Store.find({owner: email});
+
+		return res.status(200).json(stores);
+	} catch (err) {
+		err.message = err.message || "There was a problem logging in. Check your email and password or create an account.";
+		next(err);
+	}
+}
+
 async function addNewStoreToUserOwner(userDBObj, storeDBObj) {
 	const fn = CTRL_NAME + "::addNewStoreToUserOwner";
 

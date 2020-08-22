@@ -25,7 +25,15 @@ storesNames.forEach( ( productName, index ) => {
 			desc:     desc,
 			image:     images,
 			products: {},
-			contact:  {},
+			contact:  {
+				email: usersDb[counter].email,
+				phoneNumber: "0555555",
+				adress: {
+					city: "Tel Aviv",
+					street: "street",
+					houseNum: 41,
+				}
+			},
 			fakeDB: true
 		}
 		counter++;
