@@ -503,7 +503,6 @@ exports.deleteDbStores = async (req, res, next) => {
 exports.getStoresByUser = async (req, res, next) => {
 	try {
 		const email = req.userEmail;
-
 		const user = await User.findOne({ email: email });
 		if (!user) {
 			throw new Error(`User: ${email} did not exists`);
