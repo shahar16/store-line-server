@@ -4,6 +4,8 @@ const Product = require('../models/product.model');
 const User = require('../models/user.model');
 const CTRL_NAME = "store.controller";
 const appDB = require('../resources/fakeDb/fakeDb');
+const { v4: uuidv4 } = require('uuid');
+
 
 exports.addNewStore = async (req, res, next) => {
 
@@ -14,34 +16,43 @@ exports.addNewStore = async (req, res, next) => {
 			throw new Error("Request body is empty.");
 		}
 
+		if ( !req.files ) {
+			throw new Error( "Image did not received." )
+		}
+
+
 		const {
-			storeID,
 			name,
+			storeID,
 			owner,
 			desc,
-			logo,
 			contact,
-		} = req.body;
+			fakeDB
+		} = req.body
+		const newStoreID = fakeDB ? storeID :uuidv4();
+		console.log(req.id);
+		const contactAsJson = fakeDB ? contact : JSON.parse(contact);
+		const image = fakeDB ? req.file.path : req.files.map( file => file.path );
 
-		const storeDBObj = await Store.findOne({ storeID: storeID });
+		const storeDBObj = await Store.findOne({ storeID: newStoreID });
 		const userDBObj = await User.findOne({ email: owner });
 
 		if (storeDBObj) {
-			next(new Error(`${fn}: Store already exists!`));
+			throw new Error(`${fn}: Store already exists!`);
 		}
 
 		if (!userDBObj) {
-			next(new Error(`${fn}: store owner doesn't exist!`));
+			throw new Error(`${fn}: store owner doesn't exist!`);
 		}
 
 		const newStoreInDB = new Store({
-			storeID: storeID,
-			name: name,
-			owner: owner,
-			desc: desc,
-			logo: logo,
+			storeID:  newStoreID,
+			name:     name,
+			owner:    owner,
+			desc:     desc,
+			image:     image,
 			products: [],
-			contact: contact
+			contact:  contactAsJson
 		});
 		await newStoreInDB.save();
 
@@ -126,6 +137,7 @@ exports.editStoreDetails = async (req, res, next) => {
 	const fn = CTRL_NAME + '::editStoreDetails';
 
 	try {
+		let updateImages = Object.entries(req.files).length === 0 ? false :true;
 		if (Object.entries(req.body).length === 0) {
 			throw new Error("Request body is empty.");
 		}
@@ -135,21 +147,25 @@ exports.editStoreDetails = async (req, res, next) => {
 			name,
 			owner,
 			desc,
-			logo,
 			contact,
 		} = req.body;
+
+		const contactAsJson = JSON.parse(contact);
+
 
 		const storeDBObj = await Store.findOne({ storeID: storeID });
 
 		if (!storeDBObj) {
 			next(new Error(`Store ${name} did not exists in DB`));
 		} else {
+			const image = updateImages ? req.files.map( file => file.path ) : storeDBObj.image;
+			console.log(image);
 			await storeDBObj.updateOne({
 				name: name,
 				owner: owner,
 				desc: desc,
-				logo: logo,
-				contact: contact
+				image: image,
+				contact: contactAsJson
 			})
 
 			const storeDetailsMsg = `storeID: ${storeDBObj.storeID}
@@ -166,9 +182,10 @@ exports.editStoreDetails = async (req, res, next) => {
 		}
 	} catch (err) {
 		err.message = `${fn}: ` +
-			(err.message || "Failed to update store details!");
+			(err.message || "Failed to update store details");
 		next(err);
 	}
+
 }
 
 exports.addProductToStore = async (req, res, next) => {
@@ -442,6 +459,9 @@ exports.addDbStores = async (req, res, next) => {
 		await appDB["stores"].forEach((singleStore) => {
 			req.body = singleStore;
 			req.mode = "db"
+			req.file = {};
+			req.files = {};
+			req.file.path = singleStore.image;
 			this.addNewStore(req, res, next);
 		});
 
@@ -477,6 +497,23 @@ exports.deleteDbStores = async (req, res, next) => {
 			(`${fn}: failed to delete db Stores`);
 
 		throw new Error(err);
+	}
+}
+
+exports.getStoresByUser = async (req, res, next) => {
+	try {
+		const email = req.userEmail;
+
+		const user = await User.findOne({ email: email });
+		if (!user) {
+			throw new Error(`User: ${email} did not exists`);
+		}
+		const stores = await Store.find({owner: email});
+
+		return res.status(200).json(stores);
+	} catch (err) {
+		err.message = err.message || "There was a problem logging in. Check your email and password or create an account.";
+		next(err);
 	}
 }
 
