@@ -11,10 +11,10 @@ const uploadImages = require("../middlewares/uploadImage");
 const { route } = require('./users.rout');
 
 //TODO: add isAuth
-router.post('/addStore', dummyIsAuth, uploadImages,  storeController.addNewStore);
-router.post('/deleteStore', productController.deleteAllProductsBelongsToStore, storeController.deleteStore);
-router.post('/editStore',dummyIsAuth, uploadImages, storeController.editStoreDetails);
-router.post('/addProduct', dummyIsAuth, uploadImages, productController.addNewProduct, storeController.addProductToStore);
+router.post('/addStore', isAuth, uploadImages,  storeController.addNewStore);
+router.post('/deleteStore', isAuth, productController.deleteAllProductsBelongsToStore, storeController.deleteStore);
+router.post('/editStore',isAuth, uploadImages, storeController.editStoreDetails);
+router.post('/addProduct', isAuth, uploadImages, productController.addNewProduct, storeController.addProductToStore);
 router.post('/deleteProduct', storeController.deleteProduct, productController.deleteProduct,);
 router.post('/editProduct', productController.editProduct, storeController.updateProduct);
 router.post('/deleteAllProducts', storeController.deleteAllProductsFromStore);
@@ -23,6 +23,6 @@ router.post('/addDBProducts', productController.addAllDBProducts, storeControlle
 // router.post('/addDBProducts', productController.addAllDBProducts);
 // router.post('/addDBProducts', storeController.addDbProductsToStores);
 router.post('/addDBStores', storeController.addDbStores);
-router.get('/getStoresByUser', dummyIsAuth, storeController.getStoresByUser)
+router.get('/getStoresByUser', isAuth, storeController.getStoresByUser)
 
 module.exports = router
