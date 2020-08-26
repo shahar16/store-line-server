@@ -338,3 +338,28 @@ function getRandomInt(min, max) {
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
+
+exports.getProduct = async ( req, res, next ) => {
+	const fn = CTRL_NAME + "::getProduct";
+	try {
+		const { sn, storeID } = req.query
+
+		if ( !sn || !storeID ) {
+			throw new Error( "Please enter serial number and storeID" );
+		}
+
+		const productDBObj = await Product.findOne( {
+			sn:      sn,
+			storeID: storeID
+		} );
+
+		if ( !productDBObj ) {
+			throw new Error( `Product: ${sn} did not exist in store: ${storeID}` )
+		}
+
+		return res.status( 200 ).json( productDBObj );
+	} catch ( err ) {
+		err.message = err.message || ( `${fn}: failed to add new db Products` );
+		next( err );
+	}
+}

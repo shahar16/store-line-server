@@ -24,5 +24,6 @@ router.post('/addDBProducts', productController.addAllDBProducts, storeControlle
 // router.post('/addDBProducts', storeController.addDbProductsToStores);
 router.post('/addDBStores', storeController.addDbStores);
 router.get('/getStoresByUser', isAuth, storeController.getStoresByUser)
+router.get('/getOwner', storeController.getOwner)
 
 module.exports = router
