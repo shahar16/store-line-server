@@ -15,7 +15,7 @@ let productsDb = [];
 let numOfStores = 25;
 let counter = 1;
 let storeId;
-
+//TODO: add stock!
 productNames.forEach((productName, index) => {
 	productsDesc.forEach((desc) => {
 		storeId = counter;
