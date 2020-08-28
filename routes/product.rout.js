@@ -12,6 +12,7 @@ const uploadImage = require("../middlewares/uploadImage");
 // router.post('/editProduct', controller.editProduct);
 // router.post('/deleteProduct', controller.deleteProduct);
 router.get('/getHomePageProducts', controller.getHomePageProducts);
+router.get('/getProduct', controller.getProduct);
 
 
 module.exports = router

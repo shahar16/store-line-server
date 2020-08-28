@@ -120,7 +120,8 @@ exports.addNewProduct = async ( req, res, next ) => {
 				name:    name,
 				desc:    desc,
 				price:   price,
-				image:   image
+				image:   image,
+				stock:   stock
 			} );
 
 			await newProductInDB.save();
@@ -155,7 +156,7 @@ exports.editProduct = async ( req, res, next ) => {
 	const fn = CTRL_NAME + "::editProduct";
 
 	try {
-
+		let updateImages = Object.entries(req.files).length === 0 ? false :true;
 		if ( Object.entries( req.body ).length === 0 ) {
 			throw new Error( "Request body is empty." );
 		}
@@ -166,7 +167,6 @@ exports.editProduct = async ( req, res, next ) => {
 				  name,
 				  desc,
 				  price,
-				  image,
 				  stock
 			  } = req.body;
 
@@ -175,7 +175,7 @@ exports.editProduct = async ( req, res, next ) => {
 		if ( !productDBObj ) {
 			next( new Error( `${fn}: product does not exist in DB!` ) );
 		}
-
+		const image = updateImages ? req.files.map( file => file.path ) : productDBObj.image;
 		await productDBObj.updateOne( {
 			name:  name,
 			desc:  desc,
@@ -337,4 +337,29 @@ function getRandomInt(min, max) {
 	min = Math.ceil(min);
 	max = Math.floor(max);
 	return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
+
+exports.getProduct = async ( req, res, next ) => {
+	const fn = CTRL_NAME + "::getProduct";
+	try {
+		const { sn, storeID } = req.query
+
+		if ( !sn || !storeID ) {
+			throw new Error( "Please enter serial number and storeID" );
+		}
+
+		const productDBObj = await Product.findOne( {
+			sn:      sn,
+			storeID: storeID
+		} );
+
+		if ( !productDBObj ) {
+			throw new Error( `Product: ${sn} did not exist in store: ${storeID}` )
+		}
+
+		return res.status( 200 ).json( productDBObj );
+	} catch ( err ) {
+		err.message = err.message || ( `${fn}: failed to add new db Products` );
+		next( err );
+	}
 }

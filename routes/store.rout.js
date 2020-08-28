@@ -16,7 +16,7 @@ router.post('/deleteStore', isAuth, productController.deleteAllProductsBelongsTo
 router.post('/editStore',isAuth, uploadImages, storeController.editStoreDetails);
 router.post('/addProduct', isAuth, uploadImages, productController.addNewProduct, storeController.addProductToStore);
 router.post('/deleteProduct', storeController.deleteProduct, productController.deleteProduct,);
-router.post('/editProduct', productController.editProduct, storeController.updateProduct);
+router.post('/editProduct', isAuth, uploadImages, productController.editProduct, storeController.updateProduct);
 router.post('/deleteAllProducts', storeController.deleteAllProductsFromStore);
 router.post('/deleteDbStores', storeController.deleteDbStores);
 router.post('/addDBProducts', productController.addAllDBProducts, storeController.addDbProductsToStores);
@@ -24,5 +24,6 @@ router.post('/addDBProducts', productController.addAllDBProducts, storeControlle
 // router.post('/addDBProducts', storeController.addDbProductsToStores);
 router.post('/addDBStores', storeController.addDbStores);
 router.get('/getStoresByUser', isAuth, storeController.getStoresByUser)
+router.get('/getOwner', storeController.getOwner)
 
 module.exports = router

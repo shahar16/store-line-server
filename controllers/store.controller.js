@@ -576,3 +576,29 @@ async function removeStoreFromUserOwner(storeName, storeID, ownerDBObj) {
 		throw new Error(err);
 	}
 }
+
+exports.getOwner = async ( req, res, next ) => {
+	const fn = CTRL_NAME + "::getOwner";
+	try {
+		const { storeID } = req.query
+
+		if ( !storeID ) {
+			throw new Error( "Please enter storeID" );
+		}
+
+		const store = await Store.findOne( {
+			storeID: storeID
+		} );
+
+		if ( !store ) {
+			throw new Error( `Product: ${sn} did not exist in store: ${storeID}` )
+		}
+
+		return res.status( 200 ).json( {
+			owner: store.owner
+		} );
+	} catch ( err ) {
+		err.message = err.message || ( `${fn}: failed to add new db Products` );
+		next( err );
+	}
+}
