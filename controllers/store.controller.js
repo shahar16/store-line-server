@@ -84,6 +84,34 @@ exports.addNewStore = async (req, res, next) => {
 	}
 }
 
+exports.getStore = async (req, res, next) => {
+	const fn = CTRL_NAME + '::getStore';
+
+	try {
+
+		if (Object.entries(req.query).length === 0) {
+			throw new Error("Request body is empty.");
+		}
+
+		const storeID = req.query.storeID;
+		console.log(storeID);
+		const storeDBObj = await Store.findOne({ storeID: storeID });
+		console.log(storeDBObj);
+
+		if (!storeDBObj) {
+			throw new Error(`${fn}: Store doesn't exists!`);
+		}
+
+		return res.send(JSON.stringify(storeDBObj));
+
+	} catch (err) {
+		err.message = `${fn}:`
+			+
+			(err.message || "Failed to get store!");
+		next(err);
+	}
+}
+
 exports.deleteStore = async (req, res, next) => {
 	const fn = CTRL_NAME + '::deleteStore';
 
@@ -508,7 +536,7 @@ exports.getStoresByUser = async (req, res, next) => {
 		if (!user) {
 			throw new Error(`User: ${email} did not exists`);
 		}
-		const stores = await Store.find({owner: email});
+		const stores = await Store.find({ owner: email });
 
 		return res.status(200).json(stores);
 	} catch (err) {

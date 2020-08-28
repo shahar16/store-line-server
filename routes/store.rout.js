@@ -11,9 +11,10 @@ const uploadImages = require("../middlewares/uploadImage");
 const { route } = require('./users.rout');
 
 //TODO: add isAuth
-router.post('/addStore', dummyIsAuth, uploadImages,  storeController.addNewStore);
+router.post('/addStore', dummyIsAuth, uploadImages, storeController.addNewStore);
+router.get("/getStore", storeController.getStore);
 router.post('/deleteStore', productController.deleteAllProductsBelongsToStore, storeController.deleteStore);
-router.post('/editStore',dummyIsAuth, uploadImages, storeController.editStoreDetails);
+router.post('/editStore', dummyIsAuth, uploadImages, storeController.editStoreDetails);
 router.post('/addProduct', dummyIsAuth, uploadImages, productController.addNewProduct, storeController.addProductToStore);
 router.post('/deleteProduct', storeController.deleteProduct, productController.deleteProduct,);
 router.post('/editProduct', productController.editProduct, storeController.updateProduct);
