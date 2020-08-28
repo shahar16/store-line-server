@@ -6,12 +6,11 @@ const userController = require('../controllers/users.controller');
 
 const router = express.Router();
 const isAuth = require("../middlewares/isAuth");
-const dummyIsAuth = require("../middlewares/dummyIsAuth");
 const uploadImages = require("../middlewares/uploadImage");
 const { route } = require('./users.rout');
 
 //TODO: add isAuth
-router.post('/addStore', dummyIsAuth, uploadImages, storeController.addNewStore);
+router.post('/addStore', isAuth, uploadImages, storeController.addNewStore);
 router.get("/getStore", storeController.getStore);
 router.post('/addStore', isAuth, uploadImages,  storeController.addNewStore);
 router.post('/deleteStore', isAuth, productController.deleteAllProductsBelongsToStore, storeController.deleteStore);

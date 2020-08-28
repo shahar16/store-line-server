@@ -3,7 +3,6 @@ const controller = require('../controllers/product.controller');
 
 const router = express.Router();
 const isAuth = require("../middlewares/isAuth");
-const dummyIsAuth = require("../middlewares/dummyIsAuth");
 const uploadImage = require("../middlewares/uploadImage");
 
 //TODO: add isAuth
