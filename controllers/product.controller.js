@@ -221,15 +221,8 @@ exports.deleteProduct = async (req, res, next) => {
 
 		const {
 			sn,
-			storeID,
-			name,
-			desc,
-			price,
-			image,
-			stock
+			storeID
 		} = req.body;
-
-		//const image = req.file.path;
 
 		const productDBObj = await Product.findOne({
 			sn: sn,
@@ -240,12 +233,8 @@ exports.deleteProduct = async (req, res, next) => {
 			next(new Error(`${fn}: product does not exist in DB!`));
 		}
 
-		const productDetailsMsg = `product name: ${name}
-			product sn: ${sn}
-			storeID: ${storeID}
-			desc: ${desc},
-			price: ${price},
-			stock: ${stock}`;
+		const productDetailsMsg = `	product sn: ${sn}
+			storeID: ${storeID}`;
 
 		await Product.deleteOne({ sn: sn, storeID: storeID });
 
