@@ -65,6 +65,9 @@ exports.register = async (req, res, next) => {
 			password,
 			firstName,
 			lastName,
+			city,
+			street,
+			houseNum
 		} = req.body;
 		console.log(`Register:: email: ${email}`);
 
@@ -73,12 +76,19 @@ exports.register = async (req, res, next) => {
 			throw new Error(`User: ${email} already exist.`);
 		}
 
+		const address = {
+			city: city,
+			street: street,
+			houseNum: houseNum
+		}
+
 		const hashPassword = await bcrypt.hash(password, 12);
 		const newUser = new User({
 			email: email,
 			password: hashPassword,
 			firstName: firstName,
-			lastName: lastName
+			lastName: lastName,
+			defaultShippingAddress: address
 		});
 		await newUser.save();
 

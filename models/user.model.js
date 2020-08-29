@@ -30,6 +30,10 @@ const userSchema = new Schema(
         cart: {
             type: Object,
             require: false
+        },
+        defaultShippingAddress: {
+            type: Object,
+            required: false
         }
     },
     { timestamps: true }
