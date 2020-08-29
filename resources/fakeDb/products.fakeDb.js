@@ -23,7 +23,16 @@ productNames.forEach((productName, index) => {
 			`${imagesPrefix}pic${index % 8 + 1}.jpg`,
 			`${imagesPrefix}pic${( index + 1 ) % 8 + 1}.jpg`,
 			`${imagesPrefix}pic${( index + 2 ) % 8 + 1}.jpg`
-		]
+		];
+		let stock =  {
+			type: "size",
+			quantities: {
+				"Small": 50,
+				"Medium": 60,
+				"Large": 70,
+				"X - large": 80
+			}
+		};
 		let product = {
 			name: productName,
 			desc: desc,
@@ -31,6 +40,7 @@ productNames.forEach((productName, index) => {
 			sn: index,
 			image: images,
 			storeID: storeId,
+			stock: stock,
 			fakeDB: true
 		}
 		if (++counter > numOfStores) {
