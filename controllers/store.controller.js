@@ -284,10 +284,6 @@ exports.deleteProduct = async (req, res, next) => {
 			throw new Error("Request body is empty.");
 		}
 
-		// if (!req.file) {
-		// 	throw new Error("Image did not received.")
-		// }
-
 		const {
 			sn,
 			storeID
