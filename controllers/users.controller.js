@@ -207,4 +207,51 @@ exports.removeAllUsersFromDb = async (req, res, next) => {
 	});
 };
 
+exports.editUser = async (req, res, next) => {
+	try {
+		if (Object.entries(req.body).length === 0) {
+			throw new Error("Request body is empty.");
+		}
+
+		const email = req.userEmail || "shaharyig@gmail.com"
+
+		const {
+				  password,
+				  firstName,
+				  lastName,
+				  city,
+				  street,
+				  houseNum
+			  } = req.body;
+		console.log(`update:: email: ${email}`);
+
+		const userExists = await User.findOne({ email: email });
+		if (!userExists) {
+			throw new Error(`User: ${email} did not exist.`);
+		}
+
+		const address = {
+			city: city,
+			street: street,
+			houseNum: houseNum
+		}
+
+		const hashPassword = password ? await bcrypt.hash(password, 12) : userExists.password;
+		await userExists.updateOne({
+			email: email,
+			password: hashPassword,
+			firstName: firstName,
+			lastName: lastName,
+			defaultShippingAddress: address
+		})
+
+		const userToReturn = await User.findOne({ email: email });
+		return res.status(200).json(userToReturn);
+
+	} catch (err) {
+		err.message = err.message || "There was a problem with createing this new order.";
+		next(err);
+	}
+}
+
 
