@@ -11,7 +11,7 @@ firstNames.forEach( ( firatName ) => {
 			firstName:   firatName,
 			lastName:    lastName,
 			ownedStores: [],
-			cartID:        ""
+			cart:        {}
 		}
 		usersDb.push( user );
 	} );
