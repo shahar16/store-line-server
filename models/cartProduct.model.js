@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-const productSchema = new Schema(
+const cartProductSchema = new Schema(
     {
         id: {
             type: String,
