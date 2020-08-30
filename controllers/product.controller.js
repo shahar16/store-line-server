@@ -377,3 +377,22 @@ exports.getProductsList = async ( req, res, next ) => {
 		next( err );
 	}
 }
+
+exports.search = async ( req, res, next ) => {
+	const fn = CTRL_NAME + "::search";
+
+	try {
+		const query = req.query.searchQuery;
+		const products = await Product.find();
+
+		if ( !products ) {
+			throw new Error( "Did not found any products" );
+		}
+		const productsNames = products.filter( ( product ) => product.name.toLowerCase().includes(query) );
+
+		return res.status( 200 ).json( productsNames );
+	} catch ( err ) {
+		err.message = err.message || ( `${fn}: failed get products list` );
+		next( err );
+	}
+}
