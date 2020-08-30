@@ -10,7 +10,7 @@ function getToken(email) {
 	return jwt.sign(
 		{ email: email },
 		"GuyRonenIsMyBestFriend",
-		{ expiresIn: "1h" }
+		{ expiresIn: "24h" }
 	)
 }
 

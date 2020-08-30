@@ -27,8 +27,8 @@ const userSchema = new Schema(
             storeName: String,
             storeID: String
         },
-        cart: {
-            type: Object,
+        cartID: {
+            type: String,
             require: false
         },
         defaultShippingAddress: {

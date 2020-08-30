@@ -5,14 +5,19 @@ const Product = require('./product.model');
 
 const cartSchema = new Schema(
     {
-        cartID: {
+        id: {
             type: String,
             required: true
         },
-        cartProducts: {
+        products: {
             type: [Object],
-            required: false
+            required: false,
+            cartProd: Object
         },
+        totalSum: {
+            type: String,
+            required: false
+        }
     },
     { timestamps: true }
 );
