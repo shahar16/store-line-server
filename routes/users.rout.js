@@ -6,6 +6,7 @@ const storeController = require('../controllers/store.controller');
 const router = express.Router();
 const isAuth = require("../middlewares/isAuth");
 
+router.post('/editUser', isAuth,  userController.editUser);
 router.post('/login', userController.login);
 router.post('/register', userController.register);
 router.post('/seedUsers', isAuth, userController.seedUsers);//router.post('/deleteUsers', isAuth, controller.removeAllUsersFromDb);
@@ -15,8 +16,7 @@ router.post('/addtocart', isAuth, cartController.addToCart, storeController.upda
 router.post('/removefromcart', isAuth, cartController.removeFromCart, storeController.updateProduct);
 router.post('/editcartitems', isAuth, cartController.editCartItems, storeController.updateProduct);
 router.get('/getcart', isAuth, cartController.getCart);
+
 //TODO: deleteuser -> deleteStore -> deleteProductsInStore
-
-
 
 module.exports = router
