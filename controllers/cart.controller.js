@@ -62,17 +62,19 @@ exports.addToCart = async (req, res, next) => {
 
         console.log(`${fn}: checking cart id .....`);
 
-        const cartDBObj = userDBObj.cartID === "" ? await Cart.findOne({ id: userDBObj.cartID }) : await createNewCartObj();
+        const cartDBObj = userDBObj.cartID !== "" ? await Cart.findOne({ id: userDBObj.cartID }) : await createNewCartObj();
 
         console.log(`${fn}: FINISHED checking cart id .....`);
 
-        const cartProd = await createCartProdDBObj(cartDBObj, productDBObj, categoryName, quantity);
+        const cartProd = await createCartProdDBObj(cartDBObj, productDBObj, categoryName, Number(quantity));
         await cartDBObj.products.push(cartProd);
         await cartDBObj.save();
 
         await userDBObj.updateOne({
             cartID: cartDBObj.id
         })
+
+        await calculateTotalSum(cartDBObj.id);
 
         console.log(`${fn}: product added to cart successfully!`);
         next();
@@ -96,8 +98,6 @@ exports.removeFromCart = async (req, res, next) => {
             id,
             sn,
             storeID,
-            categoryName,
-            quantity
         } = req.body;
 
         const cartProduct = await CartProduct.findOne({ id: id });
@@ -123,11 +123,13 @@ exports.removeFromCart = async (req, res, next) => {
             next(new Error(`${fn}: cart no. ${userDBObj.cartID} is no longer exist in db!`));
         }
 
-        await updateProductStock(productDBObj, categoryName, quantity, ADD);
+        await updateProductStock(productDBObj, cartProduct.categoryName, 0, cartProduct.quantity, ADD);
 
         await updateCartItems(cartDBObj, cartProduct);
 
         await CartProduct.deleteOne({ id: cartProduct.id });
+
+        await calculateTotalSum(cartDBObj.id);
 
         console.log(`${fn}: product ${productDBObj.name} removed from cart successfully!`);
 
@@ -181,12 +183,14 @@ exports.editCartItems = async (req, res, next) => {
             next(new Error(`${fn}: cart no. ${userDBObj.cartID} is no longer exist in db!`));
         }
 
-        await updateProductStock(productDBObj, categoryName, cartProduct.quantity, quantity);
+        await updateProductStock(productDBObj, categoryName, cartProduct.quantity, Number(quantity));
         console.log(`${fn}: quantity = ` + quantity);
         await cartProduct.updateOne(
             { quantity: quantity });
         const updatedObj = await CartProduct.findOne({ id: cartProduct.id });
         await updateCartItems(cartDBObj, updatedObj, EDIT);
+
+        await calculateTotalSum(cartDBObj.id);
 
         console.log(`${fn}: cart product: ${productDBObj.name} updated successfully!`);
 
@@ -235,12 +239,15 @@ async function createCartProdDBObj(cartDBObj, productDBObj, categoryName, quanti
 async function updateProductStock(productDBObj, categoryName, oldQuantity, quantity, action) {
     const fn = CTRL_NAME + "::updateProductStock";
 
+    console.log(`${fn}: action = ` + action);
     const updatedStock = productDBObj.stock;
     if (action === REDUCE) {
-        console.log("reducing...");
+        // console.log("reducing...");
         updatedStock.quantities[categoryName] = updatedStock.quantities[categoryName] - quantity;
     } else if (action === ADD) {
         console.log("adding...");
+        // console.log(Object.prototype.toString.call(updatedStock.quantities[categoryName]));
+        // console.log(Object.prototype.toString.call(quantity));
         updatedStock.quantities[categoryName] = updatedStock.quantities[categoryName] + quantity;
     } else { //called from editCartItems
         console.log("editing...");
@@ -273,26 +280,43 @@ async function updateCartItems(cartDBObj, cartProduct, action) {
         });
 }
 
-async function changeProductQuantity(cartDBObj, sn, newQuantity) {
-    const cartProdArr = [];
+async function calculateTotalSum(cartID) {
+    const fn = CTRL_NAME + "::calculateTotalSum";
+    let totalSum = 0;
+    const cartDBObj = await Cart.findOne({ id: cartID });
+    const cartProducts = cartDBObj.products;
 
-    for (let i = 0; i < cartDBObj.products.length; i++) {
-        const singleProd = cartDBObj.products[i];
-        if (singleProd.sn != sn) {
-            cartProdArr.push(singleProd);
-        }
-        else {
-            if (newQuantity > 0) {
-                cartProdArr.push({
-                    productItem: singleProd.productItem,
-                    quantity: newQuantity
-                })
-            }
-        }
+    for (let i = 0; i < cartProducts.length; i++) {
+        // console.log(`${fn}: cartProducts[i].price = ` + cartProducts[i].price);
+        // console.log(`${fn}: totalSum = ` + totalSum);
+        totalSum += (cartProducts[i].price * cartProducts[i].quantity);
+        // console.log(`${fn}: totalSum = ` + totalSum);
     }
 
-    await cartDBObj.updateOne(
-        {
-            $set: { products: cartProdArr }
-        });
+
+    await cartDBObj.updateOne({
+        $set: { totalSum: totalSum }
+    })
+
+    console.log("cart totalSum = " + totalSum);
+}
+
+/**
+ * delete middlewares for db changes
+ */
+
+exports.deleteDBCartItems = async (req, res, next) => {
+    console.log("Remove all cart & cartProducts from DB");
+
+    try {
+        await CartProduct.deleteMany({});
+        await Cart.deleteMany({});
+    } catch (e) {
+        e.message = "Failed to remove all cart items from DB";
+        console.log(e.message);
+        next(e);
+    }
+    return res.status(200).json({
+        message: "Removed all cart items from DB."
+    });
 }
