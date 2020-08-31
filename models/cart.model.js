@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Product = require('./product.model');
-
 
 const cartSchema = new Schema(
     {
@@ -12,7 +10,6 @@ const cartSchema = new Schema(
         products: {
             type: [Object],
             required: false,
-            cartProd: Object
         },
         totalSum: {
             type: String,
