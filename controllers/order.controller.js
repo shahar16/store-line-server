@@ -51,6 +51,32 @@ exports.placeOrder = async (req, res, next) => {
     }
 }
 
+exports.getOrder = async (req, res, next) => {
+    const fn = CTRL_NAME + "::getOrderSummary";
+
+    try {
+        const { id } = req.query;
+
+        if (!id) {
+            next(new Error(`${fn}: cart ID wasn't attached to request!`))
+        }
+
+        const orderDBObj = await Cart.findOne({ id: id, payed: true });
+
+        if (!orderDBObj) {
+            next(new Error(`${fn}: failed to fetch order from db!`));
+        }
+        console.log(orderDBObj);
+
+        return res.send(orderDBObj);
+    } catch (err) {
+        err.message = err.message ||
+            `${fn}: Failed to get orderSummary!`;
+
+        next(new Error(err))
+    }
+}
+
 exports.getOrdersSummary = async (req, res, next) => {
     const fn = CTRL_NAME + "::getOrderSummary";
 
