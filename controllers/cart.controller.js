@@ -209,7 +209,8 @@ exports.editCartItems = async (req, res, next) => {
 async function createNewCartObj() {
     const fn = CTRL_NAME + "::createNewCartObj";
     const newCartDBObj = new Cart({
-        id: uuidv4()
+        id: uuidv4(),
+        payed: false
     });
     console.log(`${fn}: new cart has been created, cartID: ${newCartDBObj.id}`);
     await newCartDBObj.save();
