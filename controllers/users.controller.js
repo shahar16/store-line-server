@@ -67,7 +67,8 @@ exports.register = async (req, res, next) => {
 			lastName,
 			city,
 			street,
-			houseNum
+			houseNum,
+			address,
 		} = req.body;
 		console.log(`Register:: email: ${email}`);
 
@@ -76,7 +77,7 @@ exports.register = async (req, res, next) => {
 			throw new Error(`User: ${email} already exist.`);
 		}
 
-		const address = {
+		const newAddress = address ||  {
 			city: city,
 			street: street,
 			houseNum: houseNum
@@ -88,7 +89,8 @@ exports.register = async (req, res, next) => {
 			password: hashPassword,
 			firstName: firstName,
 			lastName: lastName,
-			defaultShippingAddress: address
+			defaultShippingAddress: newAddress,
+			cartID: ""
 		});
 		await newUser.save();
 
