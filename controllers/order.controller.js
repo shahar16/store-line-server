@@ -19,12 +19,15 @@ exports.placeOrder = async (req, res, next) => {
             next(new Error(`${fn}: failed to locate cart for ${email}`));
         }
 
+        const orderDates = formatDateObj();
+
         await cartDBObj.updateOne({
             email: email,
             shippingAddress: shippingAddress,
             paymentMethod: paymentMethod,
             payed: true,
-            orderDate: new Date()
+            orderDate: orderDates.orderDate,
+            estimatedShipping: orderDates.estimatedShipping
         })
 
         //payment functionality
@@ -66,14 +69,13 @@ exports.getOrder = async (req, res, next) => {
         if (!orderDBObj) {
             next(new Error(`${fn}: failed to fetch order from db!`));
         }
-        console.log(orderDBObj);
 
         return res.send(orderDBObj);
     } catch (err) {
         err.message = err.message ||
             `${fn}: Failed to get orderSummary!`;
 
-        next(new Error(err))
+        throw new Error(err);
     }
 }
 
@@ -97,4 +99,26 @@ exports.getOrdersSummary = async (req, res, next) => {
 
         next(new Error(err))
     }
+}
+
+const formatDateObj = () => {
+    const dateObj = new Date();
+    const hour = ("0" + dateObj.getHours()).slice(-2) + ":" + ("0" + dateObj.getMinutes()).slice(-2) + ":" + ("0" + dateObj.getSeconds()).slice(-2);
+    const date = ("0" + dateObj.getDate()).slice(-2) + "/" + ("0" + dateObj.getMonth() + 1).slice(-2) + "/" + dateObj.getFullYear();
+    const est = new Date(dateObj + 12096e5);
+    const estParseDate = ("0" + est.getDate()).slice(-2) + "/" + ("0" + est.getMonth() + 1).slice(-2) + "/" + est.getFullYear();
+
+    const res = {
+        orderDate: {
+            date: date,
+            hour: hour
+        },
+        estimatedShipping: {
+            date: estParseDate
+        }
+    }
+
+    console.log(res);
+
+    return res;
 }
