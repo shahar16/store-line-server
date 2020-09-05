@@ -28,7 +28,7 @@ router.post('/deletedbcarts', cartController.deleteDBCartItems);
  */
 router.post('/placeorder', isAuth, orderController.placeOrder);
 router.get('/getorder', isAuth, orderController.getOrder);
-router.get('/getorderssummary', isAuth, orderController.getOrdersSummary);
+router.get('/getuserorders', isAuth, orderController.getOrdersSummary);
 
 //TODO: deleteuser -> deleteStore -> deleteProductsInStore
 

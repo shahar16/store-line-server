@@ -28,7 +28,11 @@ const cartSchema = new Schema(
             required: false
         },
         orderDate: {
-            type: Date,
+            type: Object,
+            required: false
+        },
+        estimatedShipping: {
+            type: Object,
             required: false
         },
         payed: {
