@@ -1,5 +1,6 @@
-const usersDb = require( "./users.fakeDb" );
-const storesNames = [ "KSP", "Ivory", "Home Center", "ACE", "Shufersal" ];
+const usersDb = require("./users.fakeDb");
+const WoodWorkStore = require("./woodWorkStore");
+const storesNames = ["KSP", "Ivory", "Home Center", "ACE", "Shufersal"];
 const storesDesc = [
 	"This is the first description, this is a description for stores not for products, this description should be long.",
 	"This is the second description, its a little bit longer, this is a description for stores not for products, this description should be long.",
@@ -11,21 +12,21 @@ const imagesPrefix = "uploads/images/"
 let storesDb = [];
 let counter = 1;
 
-storesNames.forEach( ( productName, index ) => {
-	storesDesc.forEach( ( desc ) => {
+storesNames.forEach((productName, index) => {
+	storesDesc.forEach((desc) => {
 		let images = [
 			`${imagesPrefix}pic${index % 8 + 1}.jpg`,
-			`${imagesPrefix}pic${( index + 1 ) % 8 + 1}.jpg`,
-			`${imagesPrefix}pic${( index + 2 ) % 8 + 1}.jpg`
+			`${imagesPrefix}pic${(index + 1) % 8 + 1}.jpg`,
+			`${imagesPrefix}pic${(index + 2) % 8 + 1}.jpg`
 		]
 		let store = {
-			storeID:  counter,
-			name:     productName,
-			owner:    usersDb[counter].email,
-			desc:     desc,
-			image:     images,
+			storeID: counter,
+			name: productName,
+			owner: usersDb[counter].email,
+			desc: desc,
+			image: images,
 			products: {},
-			contact:  {
+			contact: {
 				email: usersDb[counter].email,
 				phoneNumber: "0555555",
 				adress: {
@@ -37,8 +38,11 @@ storesNames.forEach( ( productName, index ) => {
 			fakeDB: true
 		}
 		counter++;
-		storesDb.push( store );
-	} );
-} );
+		storesDb.push(store);
+	});
+});
+console.log(WoodWorkStore["store"]);
+storesDb.push(WoodWorkStore["store"]);
+
 
 module.exports = storesDb

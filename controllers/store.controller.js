@@ -16,8 +16,8 @@ exports.addNewStore = async (req, res, next) => {
 			throw new Error("Request body is empty.");
 		}
 
-		if ( !req.files ) {
-			throw new Error( "Image did not received." )
+		if (!req.files) {
+			throw new Error("Image did not received.")
 		}
 
 
@@ -29,10 +29,10 @@ exports.addNewStore = async (req, res, next) => {
 			contact,
 			fakeDB
 		} = req.body
-		const newStoreID = fakeDB ? storeID :uuidv4();
-		console.log(req.id);
+		const newStoreID = fakeDB ? storeID : uuidv4();
+		// console.log(req.id);
 		const contactAsJson = fakeDB ? contact : JSON.parse(contact);
-		const image = fakeDB ? req.file.path : req.files.map( file => file.path );
+		const image = fakeDB ? req.file.path : req.files.map(file => file.path);
 
 		const storeDBObj = await Store.findOne({ storeID: newStoreID });
 		const userDBObj = await User.findOne({ email: owner });
@@ -46,13 +46,13 @@ exports.addNewStore = async (req, res, next) => {
 		}
 
 		const newStoreInDB = new Store({
-			storeID:  newStoreID,
-			name:     name,
-			owner:    owner,
-			desc:     desc,
-			image:     image,
+			storeID: newStoreID,
+			name: name,
+			owner: owner,
+			desc: desc,
+			image: image,
 			products: [],
-			contact:  contactAsJson
+			contact: contactAsJson
 		});
 		await newStoreInDB.save();
 
@@ -66,9 +66,9 @@ exports.addNewStore = async (req, res, next) => {
 		contact: ${contact}`;
 
 		if (req.mode === "db") {
-			console.log(`${fn}: in db mode!
-			store details:
-			` + storeDetailsMsg);
+			// console.log(`${fn}: in db mode!
+			// store details:
+			// ` + storeDetailsMsg);
 			next();
 		} else {
 			return res.status(200).json({
@@ -94,9 +94,9 @@ exports.getStore = async (req, res, next) => {
 		}
 
 		const storeID = req.query.storeID;
-		console.log(storeID);
+		// console.log(storeID);
 		const storeDBObj = await Store.findOne({ storeID: storeID });
-		console.log(storeDBObj);
+		// console.log(storeDBObj);
 
 		if (!storeDBObj) {
 			throw new Error(`${fn}: Store doesn't exists!`);
@@ -148,8 +148,8 @@ exports.deleteStore = async (req, res, next) => {
 		};
 
 		if (req.mode === "db") {
-			console.log("in db mode ... ");
-			console.log(deleteStoreSuccessMsg);
+			// console.log("in db mode ... ");
+			// console.log(deleteStoreSuccessMsg);
 		} else {
 			return res.status(200).json(deleteStoreSuccessMsg);
 		}
@@ -165,7 +165,7 @@ exports.editStoreDetails = async (req, res, next) => {
 	const fn = CTRL_NAME + '::editStoreDetails';
 
 	try {
-		let updateImages = Object.entries(req.files).length === 0 ? false :true;
+		let updateImages = Object.entries(req.files).length === 0 ? false : true;
 		if (Object.entries(req.body).length === 0) {
 			throw new Error("Request body is empty.");
 		}
@@ -186,8 +186,8 @@ exports.editStoreDetails = async (req, res, next) => {
 		if (!storeDBObj) {
 			next(new Error(`Store ${name} did not exists in DB`));
 		} else {
-			const image = updateImages ? req.files.map( file => file.path ) : storeDBObj.image;
-			console.log(image);
+			const image = updateImages ? req.files.map(file => file.path) : storeDBObj.image;
+			// console.log(image);
 			await storeDBObj.updateOne({
 				name: name,
 				owner: owner,
@@ -253,10 +253,10 @@ exports.addProductToStore = async (req, res, next) => {
 		await storeDBObj.save();
 
 		if (req.mode === "db") {
-			console.log(`${fn}: in db mode!`
-				+ storeDetailsMsg
-				+ productDetailsMsg);
-			console.log(`${fn}: in db mode!`);
+			// console.log(`${fn}: in db mode!`
+			// 	+ storeDetailsMsg
+			// 	+ productDetailsMsg);
+			// console.log(`${fn}: in db mode!`);
 			next();
 		} else {
 			console.log(`${fn}: in regular mode!`)
@@ -309,14 +309,14 @@ exports.deleteProduct = async (req, res, next) => {
 				newProdObj.push(singleProd);
 			}
 		}
-		console.log(newProdObj);
+		// console.log(newProdObj);
 		await Store.updateOne({ storeID: storeID }, {
 			$set: { products: newProdObj }
 		});
 
-		console.log(`${fn}: product deleted from store successfully!`
-			+ storeDetailsMsg
-			+ productDetailsMsg);
+		// console.log(`${fn}: product deleted from store successfully!`
+		// 	+ storeDetailsMsg
+		// 	+ productDetailsMsg);
 
 		next();
 	}
@@ -332,7 +332,7 @@ exports.deleteAllProductsFromStore = async (req, res, next) => {
 	try {
 		const storeID = req.body.storeID;
 		const storeFromDb = await getStoreFromDb(storeID);
-		console.log(storeFromDb.products);
+		// console.log(storeFromDb.products);
 		await storeFromDb.products.forEach(function (prodItem) {
 			deleteProductFromStore(storeFromDb, prodItem.sn);
 			deleteProductFromDB(storeFromDb, prodItem.sn);
@@ -382,14 +382,14 @@ exports.updateProduct = async (req, res, next) => {
 		for (let i = 0; i < storeDBObj.products.length; i++) {
 			if (newProdObj[i].sn == sn) {
 				newProdObj[i] = productDBObj;
-				console.log(newProdObj[i]);
+				// console.log(newProdObj[i]);
 			}
 		}
 
 		await Store.updateOne({ storeID: storeID },
 			{ $set: { products: newProdObj } });
 
-		console.log(storeDBObj);
+		// console.log(storeDBObj);
 
 		return res.status(200).json({
 			message: `${fn}: product has successfully updated!`
@@ -423,11 +423,11 @@ async function getStoreFromDb(storeID) {
 */
 async function deleteProductFromStore(storeFromDb, sn) {
 	try {
-		console.log("@@@ enter to deleteProductFromStore");
-		console.log(`@@@ storeFromDb.storeID:
-		${storeFromDb.storeID}
-		sn:
-		${sn}`);
+		// console.log("@@@ enter to deleteProductFromStore");
+		// console.log(`@@@ storeFromDb.storeID:
+		// ${storeFromDb.storeID}
+		// sn:
+		// ${sn}`);
 		//TODO: add validation in case it cant delete a product
 		const deletedProduct = await storeFromDb.products.pop(sn);
 		await storeFromDb.save();
@@ -572,9 +572,9 @@ async function removeStoreFromUserOwner(storeName, storeID, ownerDBObj) {
 
 	try {
 		const updatedOwnedStoresObj = [];
-		console.log(`store name: ${storeName}`);
-		console.log(`storeID: ${storeID}`);
-		console.log(`ownerObj: ${ownerDBObj}`);
+		// console.log(`store name: ${storeName}`);
+		// console.log(`storeID: ${storeID}`);
+		// console.log(`ownerObj: ${ownerDBObj}`);
 		for (let i = 0; i < ownerDBObj.ownedStores.length; i++) {
 			if (ownerDBObj.ownedStores[i].storeName != storeName
 				&&
@@ -585,7 +585,7 @@ async function removeStoreFromUserOwner(storeName, storeID, ownerDBObj) {
 				});
 			}
 		}
-		console.log(updatedOwnedStoresObj);
+		// console.log(updatedOwnedStoresObj);
 		await ownerDBObj.updateOne(
 			{
 				$set: {
@@ -601,28 +601,28 @@ async function removeStoreFromUserOwner(storeName, storeID, ownerDBObj) {
 	}
 }
 
-exports.getOwner = async ( req, res, next ) => {
+exports.getOwner = async (req, res, next) => {
 	const fn = CTRL_NAME + "::getOwner";
 	try {
 		const { storeID } = req.query
 
-		if ( !storeID ) {
-			throw new Error( "Please enter storeID" );
+		if (!storeID) {
+			throw new Error("Please enter storeID");
 		}
 
-		const store = await Store.findOne( {
+		const store = await Store.findOne({
 			storeID: storeID
-		} );
+		});
 
-		if ( !store ) {
-			throw new Error( `Product: ${sn} did not exist in store: ${storeID}` )
+		if (!store) {
+			throw new Error(`Product: ${sn} did not exist in store: ${storeID}`)
 		}
 
-		return res.status( 200 ).json( {
+		return res.status(200).json({
 			owner: store.owner
-		} );
-	} catch ( err ) {
-		err.message = err.message || ( `${fn}: failed to add new db Products` );
-		next( err );
+		});
+	} catch (err) {
+		err.message = err.message || (`${fn}: failed to add new db Products`);
+		next(err);
 	}
 }

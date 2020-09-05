@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
+const WoodWorkStore = require("./woodWorkStore");
 
-const productNames = [ "Computer", "Keybord", "Mouse", "Speaker", "Screen", "Tent", "Iphone", "Computer", "Keybord", "Mouse", "Speaker", "Screen", "Tent", "Iphone" ];
+const productNames = ["Computer", "Keybord", "Mouse", "Speaker", "Screen", "Tent", "Iphone", "Computer", "Keybord", "Mouse", "Speaker", "Screen", "Tent", "Iphone"];
 
 const productsDesc = [
 	"This is the first description",
@@ -14,7 +15,7 @@ const productsDesc = [
 
 const stocks = {
 	Computer: {
-		type:       "screen size",
+		type: "screen size",
 		quantities: {
 			"13\"": 50,
 			"15\"": 60,
@@ -22,32 +23,32 @@ const stocks = {
 		}
 	},
 	Keybord: {
-		type:       "color",
+		type: "color",
 		quantities: {
 			"black": 50,
 			"white": 60
 		}
 	},
 	Mouse: {
-		type:       "color",
+		type: "color",
 		quantities: {
 			"black": 50,
 			"white": 60,
-			"blue":  20,
-			"red":   10
+			"blue": 20,
+			"red": 10
 		}
 	},
 	Speaker: {
-		type:       "color",
+		type: "color",
 		quantities: {
 			"black": 50,
 			"white": 60,
-			"blue":  20,
-			"red":   10
+			"blue": 20,
+			"red": 10
 		}
 	},
-	Screen : {
-		type:       "screen size",
+	Screen: {
+		type: "screen size",
 		quantities: {
 			"21\"": 50,
 			"24\"": 60,
@@ -55,7 +56,7 @@ const stocks = {
 		}
 	},
 	Tent: {
-		type:       "tent size",
+		type: "tent size",
 		quantities: {
 			"2 people": 50,
 			"3 people": 60,
@@ -63,12 +64,12 @@ const stocks = {
 		}
 	},
 	Iphone: {
-		type:       "color",
+		type: "color",
 		quantities: {
 			"black": 50,
 			"white": 60,
-			"gold":  20,
-			"silver":   10
+			"gold": 20,
+			"silver": 10
 		}
 	}
 }
@@ -79,8 +80,8 @@ let counter = 1;
 let numberOfImages = 3;
 let storeId;
 //TODO: add stock!
-productNames.forEach( ( productName, index ) => {
-	productsDesc.forEach( ( desc ) => {
+productNames.forEach((productName, index) => {
+	productsDesc.forEach((desc) => {
 		storeId = counter;
 		let images = [
 			`${imagesPrefix}/${productName}/pic${counter % numberOfImages + 1}.jpg`,
@@ -88,20 +89,31 @@ productNames.forEach( ( productName, index ) => {
 			`${imagesPrefix}/${productName}/pic${(counter + 2) % numberOfImages + 1}.jpg`
 		];
 		let product = {
-			name:    productName,
-			desc:    desc,
-			price:   ( ( index + 1 ) * 100 ),
-			sn:      uuidv4(),
-			image:   images,
+			name: productName,
+			desc: desc,
+			price: ((index + 1) * 100),
+			sn: uuidv4(),
+			image: images,
 			storeID: storeId,
-			stock:   stocks[productName],
-			fakeDB:  true
+			stock: stocks[productName],
+			fakeDB: true
 		}
-		if ( ++counter > numOfStores ) {
+		if (++counter > numOfStores) {
 			counter = 1;
 		}
-		productsDb.push( product );
-	} );
-} );
+		productsDb.push(product);
+	});
+});
+
+const woodStoreProducts = WoodWorkStore["products"];
+
+for (const [key, value] of Object.entries(woodStoreProducts)) {
+	let product = value;
+	product["fakeDB"] = true;
+	console.log(product);
+	productsDb.push(product);
+}
+
+
 
 module.exports = productsDb
