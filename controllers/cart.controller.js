@@ -5,7 +5,7 @@ const User = require("../models/user.model");
 const Store = require("../models/store.model");
 const Product = require("../models/product.model");
 const CartProduct = require("../models/cartProduct.model");
-const { v4: uuidv4 } = require('uuid');
+const shortid = require('shortid');
 const REDUCE = "reduce";
 const ADD = "add";
 const EDIT = "edit";
@@ -209,7 +209,7 @@ exports.editCartItems = async (req, res, next) => {
 async function createNewCartObj() {
     const fn = CTRL_NAME + "::createNewCartObj";
     const newCartDBObj = new Cart({
-        id: uuidv4(),
+        id: shortid.generate(),
         payed: false
     });
     console.log(`${fn}: new cart has been created, cartID: ${newCartDBObj.id}`);
@@ -220,7 +220,7 @@ async function createNewCartObj() {
 async function createCartProdDBObj(cartDBObj, productDBObj, categoryName, quantity) {
     const fn = CTRL_NAME + "::createCartProdDBObj";
     const newCartProdDBObj = new CartProduct({
-        id: uuidv4(),
+        id: shortid.generate(),
         cartID: cartDBObj.id,
         sn: productDBObj.sn,
         storeID: productDBObj.storeID,

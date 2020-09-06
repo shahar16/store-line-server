@@ -1,7 +1,7 @@
-const { v4: uuidv4 } = require('uuid');
 const WoodWorkStore = require("./woodWorkStore");
 
 const productNames = ["Computer", "Keybord", "Mouse", "Speaker", "Screen", "Tent", "Iphone", "Computer", "Keybord", "Mouse", "Speaker", "Screen", "Tent", "Iphone"];
+const shortid = require('shortid');
 
 const productsDesc = [
 	"This is the first description",
@@ -92,7 +92,7 @@ productNames.forEach((productName, index) => {
 			name: productName,
 			desc: desc,
 			price: ((index + 1) * 100),
-			sn: uuidv4(),
+			sn: shortid.generate(),
 			image: images,
 			storeID: storeId,
 			stock: stocks[productName],
