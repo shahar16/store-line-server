@@ -103,10 +103,12 @@ exports.getOrdersSummary = async (req, res, next) => {
 
 const formatDateObj = () => {
     const dateObj = new Date();
+    const estDate = new Date(Number(dateObj));
+    estDate.setDate(dateObj.getDate() + 14);
+
     const hour = ("0" + dateObj.getHours()).slice(-2) + ":" + ("0" + dateObj.getMinutes()).slice(-2) + ":" + ("0" + dateObj.getSeconds()).slice(-2);
-    const date = ("0" + dateObj.getDate()).slice(-2) + "/" + ("0" + dateObj.getMonth() + 1).slice(-2) + "/" + dateObj.getFullYear();
-    const est = new Date(dateObj + 12096e5);
-    const estParseDate = ("0" + est.getDate()).slice(-2) + "/" + ("0" + est.getMonth() + 1).slice(-2) + "/" + est.getFullYear();
+    const date = ("0" + dateObj.getDate()).slice(-2) + "/" + ("0" + (dateObj.getMonth() + 1)).slice(-2) + "/" + dateObj.getFullYear();
+    const estParseDate = ("0" + estDate.getDate()).slice(-2) + "/" + ("0" + (estDate.getMonth() + 1)).slice(-2) + "/" + estDate.getFullYear();
 
     const res = {
         orderDate: {
