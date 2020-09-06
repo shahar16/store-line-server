@@ -1,7 +1,8 @@
-const { v4: uuidv4 } = require('uuid');
 const imagesPrefix = "uploads/images/WoodStore";
 
-const storeID = uuidv4();
+const shortid = require('shortid');
+const storeID = shortid.generate();
+
 
 const WoodWorkStore = {
 
@@ -31,7 +32,7 @@ const WoodWorkStore = {
 
     products: {
         BookShelf: {
-            sn: uuidv4(),
+            sn: shortid.generate(),
             storeID: storeID,
             name: "Book Shelf",
             desc: "Contemporary design with traditional (albeit routed) dovetail joinery. I've never been a fan of adjustable shelving, which was the genesis for a fixed shelf case that could",
@@ -47,7 +48,7 @@ const WoodWorkStore = {
             }
         },
         EdgeTable: {
-            sn: uuidv4(),
+            sn: shortid.generate(),
             storeID: storeID,
             name: "Edge Table",
             desc: "If you ever wanted to bring the elegance of water bodies into your home, this classy waterfall table is just perfect. Made with glass insert waterfall table with beautiful waves snaking through the center of the table top and leg are an eye candy",
@@ -66,7 +67,7 @@ const WoodWorkStore = {
             }
         },
         CoffeeTable: {
-            sn: uuidv4(),
+            sn: shortid.generate(),
             storeID: storeID,
             name: "Coffee Table",
             desc: "Coffee table is an important part of a living room, but you start to think when space comes for a premium. In such a situation, you need a coffee table that serves multiple purposes and helps you make the most out of available space",
@@ -84,7 +85,7 @@ const WoodWorkStore = {
             }
         },
         FlowerPots: {
-            sn: uuidv4(),
+            sn: shortid.generate(),
             storeID: storeID,
             name: "FlowerPots",
             desc: "Pots and planters perhaps are lifesavers to your gardening experience",
@@ -102,7 +103,7 @@ const WoodWorkStore = {
             }
         },
         SunLounger: {
-            sn: uuidv4(),
+            sn: shortid.generate(),
             storeID: storeID,
             name: "Flower Pots",
             desc: "Pots and planters perhaps are lifesavers to your gardening experience",
@@ -119,7 +120,7 @@ const WoodWorkStore = {
             }
         },
         RecycledOakWineBarrel: {
-            sn: uuidv4(),
+            sn: shortid.generate(),
             storeID: storeID,
             name: "Recycled Oak Wine Barrel",
             desc: "Recycled Oak Wine Barrel Products Furniture par StilNovoDesign",
@@ -135,7 +136,7 @@ const WoodWorkStore = {
             }
         },
         WoodCalender: {
-            sn: uuidv4(),
+            sn: shortid.generate(),
             storeID: storeID,
             name: "Wood Calender",
             desc: "Perpetual calendar, wooden perpetual calendar, wood calendar, perpetual calender, never ending calendar",
@@ -153,7 +154,7 @@ const WoodWorkStore = {
             }
         },
         Shelf: {
-            sn: uuidv4(),
+            sn: shortid.generate(),
             storeID: storeID,
             name: "Shelf",
             desc: "Modern Wall Shelf, Solid Walnut for Hanging Plants, Books, Photos. Handmade, Wood, Adjustable, Mid-century, Scandinavian",
@@ -171,7 +172,7 @@ const WoodWorkStore = {
             }
         },
         Shelf: {
-            sn: uuidv4(),
+            sn: shortid.generate(),
             storeID: storeID,
             name: "Shelf",
             desc: "Modern Wall Shelf, Solid Walnut for Hanging Plants, Books, Photos. Handmade, Wood, Adjustable, Mid-century, Scandinavian",
@@ -189,7 +190,7 @@ const WoodWorkStore = {
             }
         },
         OldWoodPalletsLamps: {
-            sn: uuidv4(),
+            sn: shortid.generate(),
             storeID: storeID,
             name: "Old Wood Pallets Lamps",
             desc: "Nice lamps made with old pallets",
@@ -205,7 +206,7 @@ const WoodWorkStore = {
             }
         },
         BicycleBookShelf: {
-            sn: uuidv4(),
+            sn: shortid.generate(),
             storeID: storeID,
             name: "Bicycle Book Shelf",
             desc: "Bicycle Book Shelf",

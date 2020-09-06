@@ -4,7 +4,7 @@ const Product = require('../models/product.model');
 const User = require('../models/user.model');
 const CTRL_NAME = "store.controller";
 const appDB = require('../resources/fakeDb/fakeDb');
-const { v4: uuidv4 } = require('uuid');
+const shortid = require('shortid');
 
 
 exports.addNewStore = async (req, res, next) => {
@@ -29,7 +29,7 @@ exports.addNewStore = async (req, res, next) => {
 			contact,
 			fakeDB
 		} = req.body
-		const newStoreID = fakeDB ? storeID : uuidv4();
+		const newStoreID = fakeDB ? storeID : shortid.generate();
 		// console.log(req.id);
 		const contactAsJson = fakeDB ? contact : JSON.parse(contact);
 		const image = fakeDB ? req.file.path : req.files.map(file => file.path);
