@@ -46,6 +46,81 @@ const WoodWorkStore = {
         }
       }
     },
+    KeyHook:             {
+      sn:      shortid.generate(),
+      storeID: storeID,
+      name:    'Key Hook',
+      desc:    'Handmade key board made of solid wood//key hook//Various variants//gifts for men//gifts for women// key holder',
+      price:   135,
+      image:   [
+        `${imagesPrefix}/KeyHook/pic1.jpg`,
+        `${imagesPrefix}/KeyHook/pic2.jpg`,
+        `${imagesPrefix}/KeyHook/pic3.jpg`,
+        `${imagesPrefix}/KeyHook/pic4.jpg`
+      ],
+      stock:   {
+        type:       'unique',
+        quantities: {
+          'one size': 5
+        }
+      }
+    },
+    WoodCoaster:             {
+      sn:      shortid.generate(),
+      storeID: storeID,
+      name:    'Wood Coaster',
+      desc:    'Cedar Wood coaster, wood coaster, wood slice coaster, rustic coaster set , cedar slice coaster, wedding Gift , gift for him, gift for her',
+      price:   135,
+      image:   [
+        `${imagesPrefix}/WoodCoaster/pic1.jpg`,
+        `${imagesPrefix}/WoodCoaster/pic2.jpg`,
+        `${imagesPrefix}/WoodCoaster/pic3.jpg`
+      ],
+      stock:   {
+        type:       'unique',
+        quantities: {
+          'one size': 5
+        }
+      }
+    },
+    WoodiPhoneCase:             {
+      sn:      shortid.generate(),
+      storeID: storeID,
+      name:    'Wood iPhone Case',
+      desc:    'Cellular - Real Wood iPhone Case - iPhone 11, 11 Pro/Max, XR, XS Max, X/XS, 8/7, 8/7 Plus, 6s - Made in Canada by Keyway Designs',
+      price:   135,
+      image:   [
+        `${imagesPrefix}/WoodiPhoneCase/pic1.jpg`,
+        `${imagesPrefix}/WoodiPhoneCase/pic2.jpg`,
+        `${imagesPrefix}/WoodiPhoneCase/pic3.jpg`
+      ],
+      stock:   {
+        type:       'unique',
+        quantities: {
+          'one size': 5
+        }
+      }
+    },
+    WoodenBook:             {
+      sn:      shortid.generate(),
+      storeID: storeID,
+      name:    'Wooden Book',
+      desc:    'Journal , Tree Of Life , Diaries , Wooden Book , Notebooks , Personal Diary , Wood Book Cover , Unique Gifts , Smoked Poplar , Coptic Stitch',
+      price:   135,
+      image:   [
+        `${imagesPrefix}/WoodenBook/pic1.jpg`,
+        `${imagesPrefix}/WoodenBook/pic2.jpg`,
+        `${imagesPrefix}/WoodenBook/pic3.jpg`,
+        `${imagesPrefix}/WoodenBook/pic4.jpg`,
+        `${imagesPrefix}/WoodenBook/pic5.jpg`
+      ],
+      stock:   {
+        type:       'unique',
+        quantities: {
+          'one size': 5
+        }
+      }
+    },
     EdgeTable:             {
       sn:      shortid.generate(),
       storeID: storeID,
