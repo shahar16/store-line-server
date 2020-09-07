@@ -4,13 +4,13 @@
  * fakeDb["products"] : array of products
  * fakeDb["stores"] : array of stores
  * */
-const usersDb = require( "./users.fakeDb" );
-const productsDb = require( "./products.fakeDb" );
-const storesDb = require( "./stores.fakeDb" );
+const usersDb = require('./users.fakeDb')
+const productsDb = require('./products.fakeDb')
+const storesDb = require('./stores.fakeDb')
 const fakeDb = {}
 
-fakeDb["users"] = usersDb;
-fakeDb["products"] = productsDb;
-fakeDb["stores"] = storesDb;
+fakeDb['users'] = usersDb
+fakeDb['products'] = productsDb
+fakeDb['stores'] = storesDb
 
-module.exports = fakeDb;
+module.exports = fakeDb
