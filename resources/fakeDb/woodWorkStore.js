@@ -262,7 +262,7 @@ const WoodWorkStore = {
     BicycleBookShelf:      {
       sn:      shortid.generate(),
       storeID: storeID,
-      name:    'Bicycle Book Shelf',
+      name:    'Book Shelf',
       desc:    'Bicycle Book Shelf',
       price:   350,
       image:   [
