@@ -91,8 +91,6 @@ const WoodWorkStore = {
       price:   120,
       image:   [
         `${imagesPrefix}/FlowerPots/pic1.jpg`,
-        `${imagesPrefix}/FlowerPots/pic2.jpg`,
-        `${imagesPrefix}/FlowerPots/pic3.jpg`
       ],
       stock:   {
         type:       'unique',
@@ -173,7 +171,7 @@ const WoodWorkStore = {
     OldWoodPalletsLamps:   {
       sn:      shortid.generate(),
       storeID: storeID,
-      name:    'Old Wood Pallets Lamps',
+      name:    'Wood Lamps',
       desc:    'Nice lamps made with old pallets',
       price:   350,
       image:   [
