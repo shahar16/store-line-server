@@ -10,10 +10,6 @@ const Store = require('./routes/store.rout')
 const TestEnv = require('./routes/initValues.rout')
 const app = express()
 
-app.use('/', function(req, res){
-  res.send("hello")
-})
-
 app.use('/uploads', express.static('uploads'))
 app.use(compression())
 app.use(helmet())
