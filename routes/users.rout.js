@@ -30,6 +30,5 @@ router.post('/placeorder', isAuth, orderController.placeOrder)
 router.get('/getorder', isAuth, orderController.getOrder)
 router.get('/getuserorders', isAuth, orderController.getOrdersSummary)
 
-//TODO: deleteuser -> deleteStore -> deleteProductsInStore
 
 module.exports = router
