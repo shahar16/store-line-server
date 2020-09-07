@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const app = require('../app')
 
-const sPort = 3001
+const sPort = 8080
 
 const mongoAtlasUri =
         'mongodb+srv://' +

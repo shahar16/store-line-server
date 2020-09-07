@@ -9,7 +9,7 @@ const WoodWorkStore = {
     storeID:  storeID,
     name:     'wood-work shop',
     owner:    'shaharyig@gmail.com',
-    desc:     'wood art shop',
+    desc:     'This is a pop-up store of wood working. Here you can find and buy all my latest wood work. Enjoy!',
     products: {},
     image:    [
       `${imagesPrefix}/EdgeTable/il_794xN.1857962939_h6c0.jpg`,
@@ -70,7 +70,7 @@ const WoodWorkStore = {
       storeID: storeID,
       name:    'Wood Coaster',
       desc:    'Cedar Wood coaster, wood coaster, wood slice coaster, rustic coaster set , cedar slice coaster, wedding Gift , gift for him, gift for her',
-      price:   135,
+      price:   117,
       image:   [
         `${imagesPrefix}/WoodCoaster/pic1.jpg`,
         `${imagesPrefix}/WoodCoaster/pic2.jpg`,
@@ -88,7 +88,7 @@ const WoodWorkStore = {
       storeID: storeID,
       name:    'iPhone Case',
       desc:    'Cellular - Real Wood iPhone Case - iPhone 11, 11 Pro/Max, XR, XS Max, X/XS, 8/7, 8/7 Plus, 6s - Made in Canada by Keyway Designs',
-      price:   135,
+      price:   85,
       image:   [
         `${imagesPrefix}/WoodiPhoneCase/pic1.jpg`,
         `${imagesPrefix}/WoodiPhoneCase/pic2.jpg`,
@@ -106,7 +106,7 @@ const WoodWorkStore = {
       storeID: storeID,
       name:    'Wooden Book',
       desc:    'Journal , Tree Of Life , Diaries , Wooden Book , Notebooks , Personal Diary , Wood Book Cover , Unique Gifts , Smoked Poplar , Coptic Stitch',
-      price:   135,
+      price:   120,
       image:   [
         `${imagesPrefix}/WoodenBook/pic1.jpg`,
         `${imagesPrefix}/WoodenBook/pic2.jpg`,
@@ -126,7 +126,7 @@ const WoodWorkStore = {
       storeID: storeID,
       name:    'Edge Table',
       desc:    'If you ever wanted to bring the elegance of water bodies into your home, this classy waterfall table is just perfect. Made with glass insert waterfall table with beautiful waves snaking through the center of the table top and leg are an eye candy',
-      price:   150,
+      price:   330,
       image:   [
         `${imagesPrefix}/EdgeTable/il_794xN.1857962939_h6c0.jpg`,
         `${imagesPrefix}/EdgeTable/il_794xN.1857974595_6zte.jpg`,
@@ -161,7 +161,7 @@ const WoodWorkStore = {
     FlowerPots:            {
       sn:      shortid.generate(),
       storeID: storeID,
-      name:    'FlowerPots',
+      name:    'Flower Pots',
       desc:    'Pots and planters perhaps are lifesavers to your gardening experience',
       price:   120,
       image:   [
@@ -177,12 +177,12 @@ const WoodWorkStore = {
     SunLounger:            {
       sn:      shortid.generate(),
       storeID: storeID,
-      name:    'Flower Pots',
-      desc:    'Pots and planters perhaps are lifesavers to your gardening experience',
+      name:    'Sun Lounger',
+      desc:    'A sun lounger made from pallet wood (slats) and a bottom plate. Uncertain I’m still on the coat',
       price:   120,
       image:   [
-        `${imagesPrefix}/FlowerPots/pic1.jpg`,
-        `${imagesPrefix}/FlowerPots/pic2.jpg`
+        `${imagesPrefix}/SunLounger/pic1.jpg`,
+        `${imagesPrefix}/SunLounger/pic2.jpg`
       ],
       stock:   {
         type:       'unique',
