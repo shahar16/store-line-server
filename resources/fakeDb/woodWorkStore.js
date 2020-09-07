@@ -86,7 +86,7 @@ const WoodWorkStore = {
     WoodiPhoneCase:             {
       sn:      shortid.generate(),
       storeID: storeID,
-      name:    'Wood iPhone Case',
+      name:    'iPhone Case',
       desc:    'Cellular - Real Wood iPhone Case - iPhone 11, 11 Pro/Max, XR, XS Max, X/XS, 8/7, 8/7 Plus, 6s - Made in Canada by Keyway Designs',
       price:   135,
       image:   [
@@ -194,7 +194,7 @@ const WoodWorkStore = {
     RecycledOakWineBarrel: {
       sn:      shortid.generate(),
       storeID: storeID,
-      name:    'Recycled Oak Wine Barrel',
+      name:    'Wine Barrel',
       desc:    'Recycled Oak Wine Barrel Products Furniture par StilNovoDesign',
       price:   120,
       image:   [
