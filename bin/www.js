@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const app = require('../app')
 
-const sPort = 8080
+const sPort = process.env.PORT || 8080
 
 const mongoAtlasUri = 'mongodb+srv://shaharyig:shyi9636963@projects-ple4w.mongodb.net/online_shop?retryWrites=true&w=majority'
 
