@@ -2,6 +2,7 @@
 const Product = require('../models/product.model')
 const CTRL_NAME = 'product.controller'
 const appDB = require('../resources/fakeDb/fakeDb')
+const fakeDb = require('../resources/fakeDb/fakeDb')
 let ALL_PRODUCTS = []
 let ALL_PRODUCTS_LENGTH = 0
 
@@ -51,20 +52,20 @@ exports.addProduct = async (req, res, next) => {
     }
 
     const {
-            sn,
-            price,
-            desc,
-            name
-          } = req.body
+      sn,
+      price,
+      desc,
+      name
+    } = req.body
     const image = req.file.path
 
     const productItemExists = await Product.findOne({ sn: sn })
     if (!productItemExists) {
       const newProduct = new Product({
-        sn:    sn,
-        name:  name,
+        sn: sn,
+        name: name,
         price: price,
-        desc:  desc,
+        desc: desc,
         image: image
       })
       await newProduct.save()
@@ -93,20 +94,29 @@ exports.addNewProduct = async (req, res, next) => {
     }
 
     const {
-            sn,
-            storeID,
-            name,
-            desc,
-            price,
-            stock,
-            fakeDB
-          } = req.body
+      sn,
+      storeID,
+      name,
+      desc,
+      price,
+      stock,
+      fakeDB
+    } = req.body
     const parseFromJson = fakeDB ? stock : JSON.parse(stock)
-    //console.log(parseFromJson);
-    const image = fakeDB ? req.file.path : req.files.map(file => file.path)
-
+    const image = fakeDB ? req.file.path : req.files.map(file => file.path);
+    let labelWithDup = setLabelByProductName(name, desc);
+    if (fakeDB) {
+    } else {
+      const reqLabel = req.body.label;
+      const parseLabel = JSON.parse(reqLabel);
+      console.log(parseLabel);
+      const lbl = labelWithDup.concat(parseLabel);
+      labelWithDup = lbl;
+      console.log(labelWithDup);
+    }
+    const label = removeDuplicates(labelWithDup);
     const productDBObj = await Product.findOne({
-      sn:      sn,
+      sn: sn,
       storeID: storeID
     })
 
@@ -118,13 +128,14 @@ exports.addNewProduct = async (req, res, next) => {
 			stock: ${stock}`))
     } else {
       const newProductInDB = new Product({
-        sn:      sn,
+        sn: sn,
         storeID: storeID,
-        name:    name,
-        desc:    desc,
-        price:   price,
-        image:   image,
-        stock:   parseFromJson
+        name: name,
+        desc: desc,
+        price: price,
+        image: image,
+        stock: parseFromJson,
+        label: label
       })
 
       await newProductInDB.save()
@@ -148,8 +159,8 @@ exports.addNewProduct = async (req, res, next) => {
     }
 
   } catch (err) {
-    err.message = ( `${fn}: ` + err.message ) ||
-      ( `${fn}: failed to create new Product` )
+    err.message = (`${fn}: ` + err.message) ||
+      (`${fn}: failed to create new Product`)
 
     next(err)
   }
@@ -166,26 +177,30 @@ exports.editProduct = async (req, res, next) => {
     }
 
     const {
-            sn,
-            storeID,
-            name,
-            desc,
-            price,
-            stock
-          } = req.body
+      sn,
+      storeID,
+      name,
+      desc,
+      price,
+      stock,
+      label
+    } = req.body
 
     const productDBObj = await Product.findOne({ sn: sn, storeID: storeID })
+    const parseStockFromJson = JSON.parse(stock)
+    const parseLabelFromJson = JSON.parse(label);
 
     if (!productDBObj) {
       next(new Error(`${fn}: product does not exist in DB!`))
     }
     const image = updateImages ? req.files.map(file => file.path) : productDBObj.image
     await productDBObj.updateOne({
-      name:  name,
-      desc:  desc,
+      name: name,
+      desc: desc,
       price: price,
       image: image,
-      stock: stock
+      stock: parseStockFromJson,
+      label: parseLabelFromJson
     })
 
     await productDBObj.save()
@@ -205,7 +220,7 @@ exports.editProduct = async (req, res, next) => {
     next()
   } catch (err) {
     err.message = err.message ||
-      ( `${fn}: failed to update product Product` )
+      (`${fn}: failed to update product Product`)
 
     next(err)
   }
@@ -221,12 +236,12 @@ exports.deleteProduct = async (req, res, next) => {
     }
 
     const {
-            sn,
-            storeID
-          } = req.body
+      sn,
+      storeID
+    } = req.body
 
     const productDBObj = await Product.findOne({
-      sn:      sn,
+      sn: sn,
       storeID: storeID
     })
 
@@ -241,11 +256,11 @@ exports.deleteProduct = async (req, res, next) => {
 
     return res.status(200).json({
       message: 'product successfully deleted from DB:'
-                 + productDetailsMsg
+        + productDetailsMsg
     })
   } catch (err) {
-    err.message = ( `${fn}: ` + err.message ) ||
-      ( `${fn}: Failed to delete product from DB!` )
+    err.message = (`${fn}: ` + err.message) ||
+      (`${fn}: Failed to delete product from DB!`)
 
     next(err)
   }
@@ -274,9 +289,9 @@ exports.deleteAllProductsBelongsToStore = async (req, res, next) => {
 
   try {
     const {
-            storeID,
-            name
-          } = req.body
+      storeID,
+      name
+    } = req.body
 
     // const storeDBObj = await Store.findOne({ storeID: storeID });
 
@@ -285,7 +300,7 @@ exports.deleteAllProductsBelongsToStore = async (req, res, next) => {
     // }
 
     const result = Product.deleteMany({ storeID: storeID })
-    const numOfDeletedItems = ( await result ).deletedCount
+    const numOfDeletedItems = (await result).deletedCount
 
     console.log(`${fn}: ${numOfDeletedItems} deleted from DB!`)
 
@@ -319,17 +334,17 @@ exports.addAllDBProducts = async (req, res, next) => {
     //next();
     return res.status(200)
   } catch (err) {
-    err.message = ( `${fn}: ` + err.message ) ||
-      ( `${fn}: failed to add new db Products` )
+    err.message = (`${fn}: ` + err.message) ||
+      (`${fn}: failed to add new db Products`)
 
     next(err)
   }
 }
 
-function getRandomInt (min, max) {
+function getRandomInt(min, max) {
   min = Math.ceil(min)
   max = Math.floor(max)
-  return Math.floor(Math.random() * ( max - min ) + min) //The maximum is exclusive and the minimum is inclusive
+  return Math.floor(Math.random() * (max - min) + min) //The maximum is exclusive and the minimum is inclusive
 }
 
 exports.getProduct = async (req, res, next) => {
@@ -342,7 +357,7 @@ exports.getProduct = async (req, res, next) => {
     }
 
     const productDBObj = await Product.findOne({
-      sn:      sn,
+      sn: sn,
       storeID: storeID
     })
 
@@ -352,7 +367,7 @@ exports.getProduct = async (req, res, next) => {
 
     return res.status(200).json(productDBObj)
   } catch (err) {
-    err.message = err.message || ( `${fn}: failed to add new db Products` )
+    err.message = err.message || (`${fn}: failed to add new db Products`)
     next(err)
   }
 }
@@ -374,7 +389,7 @@ exports.getProductsList = async (req, res, next) => {
 
     return res.status(200).json(productsNames)
   } catch (err) {
-    err.message = err.message || ( `${fn}: failed get products list` )
+    err.message = err.message || (`${fn}: failed get products list`)
     next(err)
   }
 }
@@ -393,7 +408,123 @@ exports.search = async (req, res, next) => {
 
     return res.status(200).json(productsNames)
   } catch (err) {
-    err.message = err.message || ( `${fn}: failed get products list` )
+    err.message = err.message || (`${fn}: failed get products list`)
     next(err)
   }
+}
+
+function setLabelByProductName(name, description) {
+  const prodName = String(name).toLowerCase();
+  const desc = String(description).toLowerCase();
+  const label = [];
+
+  if (String(prodName).includes("computer") || String(desc).includes("computer")) {
+    label.push("computer");
+    label.push("electrical-equipment");
+  }
+  if (String(prodName).includes("keyboard") || String(desc).includes("keyboard")) {
+    label.push("keyboard");
+    label.push("computer-accessories");
+  }
+  if (String(prodName).includes("computer mouse") || String(desc).includes("mouse")) {
+    label.push("computer mouse");
+    label.push("computer-accessories");
+  }
+  if (String(prodName).includes("speaker") || String(desc).includes("speaker")) {
+    label.push("speaker");
+    label.push("electrical-equipment");
+    label.push("audio-devices");
+  }
+  if (String(prodName).includes("headphones") || String(desc).includes("headphones")) {
+    label.push("headphones");
+    label.push("electrical-equipment");
+    label.push("audio-devices");
+  }
+  if (String(prodName).includes("soundbar") || String(desc).includes("soundbar")) {
+    label.push("soundbar");
+    label.push("electrical-equipment");
+    label.push("audio-devices");
+  }
+  if (String(prodName).includes("pot") || String(desc).includes("pot")) {
+    label.push("pot");
+    label.push("kitchen-tools");
+  }
+  if (String(prodName).includes("knife") || String(desc).includes("knife")) {
+    label.push("knife");
+    label.push("kitchen-tools");
+  }
+  if (String(prodName).includes("placement") || String(desc).includes("placement")) {
+    label.push("placement");
+    label.push("kitchen-tools");
+  }
+  if (String(prodName).includes("table") || String(desc).includes("table")) {
+    label.push("table");
+    label.push("home-design");
+    label.push("furniture");
+  }
+  if (String(prodName).includes("wood") || String(desc).includes("wood")) {
+    label.push("wood");
+    label.push("art");
+  }
+  if (String(prodName).includes("chair") || String(desc).includes("chair")) {
+    label.push("chair");
+    label.push("home-design");
+    label.push("furniture");
+  }
+  if (String(prodName).includes("footstool") || String(desc).includes("footstool")) {
+    label.push("footstool");
+    label.push("home-design");
+    label.push("furniture");
+  }
+  if (String(prodName).includes("carpet") || String(desc).includes("carpet")) {
+    label.push("carpet");
+    label.push("home-design");
+    label.push("furniture");
+  }
+  if (String(prodName).includes("partition") || String(desc).includes("partition")) {
+    label.push("partition");
+    label.push("home-design");
+    label.push("furniture");
+  }
+  if (String(prodName).includes("dresser") || String(desc).includes("dresser")) {
+    label.push("dresser");
+    label.push("home-design");
+    label.push("furniture");
+  }
+  if (String(prodName).includes("lamp") || String(desc).includes("lamp")) {
+    label.push("lamp");
+    label.push("home-design");
+    label.push("furniture");
+  }
+  if (String(prodName).includes("shoe") || String(desc).includes("shoe")) {
+    label.push("shoe");
+    label.push("fashion");
+    label.push("fashion-accessories")
+  }
+  if (String(prodName).includes("trainers") || String(desc).includes("trainers")) {
+    label.push("trainers");
+    label.push("shoe");
+    label.push("fashion");
+    label.push("fashion-accessories")
+  }
+  if (String(prodName).includes("shirt") || String(desc).includes("shirt")) {
+    label.push("shirt");
+    label.push("fashion");
+  }
+  if (String(prodName).includes("shorts") || String(desc).includes("shorts")) {
+    label.push("shorts");
+    label.push("fashion");
+  }
+  if (String(prodName).includes("trousers") || String(desc).includes("trousers")) {
+    label.push("trousers");
+    label.push("fashion");
+  }
+  return label;
+}
+
+function removeDuplicates(arr) {
+  const labels = arr.filter((item, index) => {
+    return arr.indexOf(item) === index;
+  });
+  return labels;
 }
