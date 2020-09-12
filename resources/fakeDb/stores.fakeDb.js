@@ -1,5 +1,5 @@
 const usersDb = require('./users.fakeDb')
-const WoodWorkStore = require('./woodWorkStore')
+const WoodWorkStore = require('../demo_stores/woodWorkStore')
 const storesNames = ['KSP', 'Ivory', 'Home Center', 'ACE', 'Shufersal']
 const storesDesc = [
   'This is the first description, this is a description for stores not for products, this description should be long.',

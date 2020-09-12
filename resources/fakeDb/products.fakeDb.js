@@ -1,4 +1,4 @@
-const WoodWorkStore = require('./woodWorkStore')
+const WoodWorkStore = require('../demo_stores/woodWorkStore')
 
 const productNames = ['Computer 13"', 'Computer 15"', 'Computer 17"', 'Pot 2L', 'Pot 3L', 'Keybord', 'Mouse', 'Speaker',
   'Screen 21"', 'Screen 24"', 'Screen 27"', 'Tent 3 people', 'Tent 4 people', 'Iphone', 'Drill', 'Bottle 1L', 'Bottle 1.5L',
