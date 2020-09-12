@@ -3,34 +3,38 @@ const Schema = mongoose.Schema
 
 const productSchema = new Schema(
   {
-    sn:      {
-      type:     String,
+    sn: {
+      type: String,
       required: true
     },
     storeID: {
-      type:     String,
+      type: String,
       required: true
     },
-    name:    {
-      type:     String,
+    name: {
+      type: String,
       required: true
     },
-    desc:    {
-      type:     String,
+    desc: {
+      type: String,
       required: true
     },
-    price:   {
-      type:     String,
+    price: {
+      type: String,
       required: true
     },
-    image:   {
-      type:     [String],
+    image: {
+      type: [String],
       required: false
     },
-    stock:   {
-      type:     Object,
+    stock: {
+      type: Object,
       required: false
-    }
+    },
+    label: {
+      type: [String],
+      required: false
+    },
   },
   { timestamps: true }
 )
