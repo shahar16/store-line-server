@@ -104,7 +104,7 @@ exports.addNewProduct = async (req, res, next) => {
     } = req.body
     const parseFromJson = fakeDB ? stock : JSON.parse(stock)
     const image = fakeDB ? req.file.path : req.files.map(file => file.path);
-    let labelWithDup = setLabelByProductName(name, desc);
+    let labelWithDup = setLabelByProductName(name, desc, stock);
     if (fakeDB) {
     } else {
       const reqLabel = req.body.label;
@@ -412,7 +412,6 @@ exports.search = async (req, res, next) => {
     next(err)
   }
 }
-
 exports.getLabels = async (req, res, next) => {
   const fn = CTRL_NAME + '::getLabels'
 
@@ -431,17 +430,25 @@ exports.getLabels = async (req, res, next) => {
 
     return res.status(200).json(labels)
   } catch (err) {
-    err.message = err.message || ( `${fn}: failed get products list` )
+    err.message = err.message || (`${fn}: failed get products list`)
     next(err)
   }
 }
-function setLabelByProductName(name, description) {
+function setLabelByProductName(name, description, stock) {
   const prodName = String(name).toLowerCase();
   const desc = String(description).toLowerCase();
   const label = [];
 
   if (String(prodName).includes("computer") || String(desc).includes("computer")) {
     label.push("computer");
+    label.push("electrical-equipment");
+  }
+  if (String(prodName).includes("monitor") || String(desc).includes("monitor")) {
+    label.push("monitor");
+    label.push("electrical-equipment");
+  }
+  if (String(prodName).includes("screen") || String(desc).includes("screen")) {
+    label.push("screen");
     label.push("electrical-equipment");
   }
   if (String(prodName).includes("keyboard") || String(desc).includes("keyboard")) {
@@ -462,10 +469,24 @@ function setLabelByProductName(name, description) {
     label.push("electrical-equipment");
     label.push("audio-devices");
   }
+  if (String(prodName).includes("headset") || String(desc).includes("headset")) {
+    label.push("headphones");
+    label.push("electrical-equipment");
+    label.push("audio-devices");
+  }
   if (String(prodName).includes("soundbar") || String(desc).includes("soundbar")) {
     label.push("soundbar");
     label.push("electrical-equipment");
     label.push("audio-devices");
+  }
+  if (String(prodName).includes("phone") || String(desc).includes("phone")) {
+    label.push("phone");
+    label.push("electrical-equipment");
+  }
+  if (String(prodName).includes("tv") || String(desc).includes("tv") || String(prodName).includes("television") || String(desc).includes("television")) {
+    label.push("tv");
+    label.push("television");
+    label.push("electrical-equipment");
   }
   if (String(prodName).includes("pot") || String(desc).includes("pot")) {
     label.push("pot");
@@ -531,6 +552,17 @@ function setLabelByProductName(name, description) {
   }
   if (String(prodName).includes("shirt") || String(desc).includes("shirt")) {
     label.push("shirt");
+    label.push("fashion");
+  }
+  if (String(prodName).includes("hoodie") || String(desc).includes("hoodie")) {
+    label.push("hoodie");
+    label.push("fashion");
+  }
+  if (String(prodName).includes("sandal") || String(desc).includes("sandal")) {
+    label.push("sandal");
+    label.push("fashion");
+  }
+  if (!String(desc).includes("monitor") && !String(desc).includes("screen") && !String(desc).includes("tv") && String(stock.type).includes("size")) {
     label.push("fashion");
   }
   if (String(prodName).includes("shorts") || String(desc).includes("shorts")) {
