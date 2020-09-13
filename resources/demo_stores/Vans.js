@@ -35,9 +35,9 @@ const Vans = {
             desc: 'KYLE WALKER CLASSIC ROSE T-SHIRT',
             price: 119.99,
             image: [
-                `${imagesPrefix}/t1/pic1.jpg`,
-                `${imagesPrefix}/t1/pic2.jpg`,
-                `${imagesPrefix}/t1/pic3.jpg`,
+                `${imagesPrefix}/t1/pic1.png`,
+                `${imagesPrefix}/t1/pic2.png`,
+                `${imagesPrefix}/t1/pic3.png`,
             ],
             stock: {
                 type: 'size',
@@ -56,9 +56,9 @@ const Vans = {
             desc: 'KYLE WALKER CHECKERBOARD T-SHIRT',
             price: 119.99,
             image: [
-                `${imagesPrefix}/t2/pic1.jpg`,
-                `${imagesPrefix}/t2/pic2.jpg`,
-                `${imagesPrefix}/t2/pic3.jpg`,
+                `${imagesPrefix}/t2/pic1.png`,
+                `${imagesPrefix}/t2/pic2.png`,
+                `${imagesPrefix}/t2/pic3.png`,
             ],
             stock: {
                 type: 'size',
@@ -77,7 +77,7 @@ const Vans = {
             desc: 'KYLE WALKER LONG SLEEVE SHIRT',
             price: 189.99,
             image: [
-                `${imagesPrefix}/s2/pic1.jpg`,
+                `${imagesPrefix}/s2/pic1.png`,
             ],
             stock: {
                 type: 'size',
@@ -96,9 +96,9 @@ const Vans = {
             desc: 'VANS X SHAKE JUNT CHICKEN & WAFFLE T-SHIRT',
             price: 119.99,
             image: [
-                `${imagesPrefix}/t4/pic1.jpg`,
-                `${imagesPrefix}/t4/pic2.jpg`,
-                `${imagesPrefix}/t4/pic3.jpg`,
+                `${imagesPrefix}/t4/pic1.png`,
+                `${imagesPrefix}/t4/pic2.png`,
+                `${imagesPrefix}/t4/pic3.png`,
             ],
             stock: {
                 type: 'size',
@@ -117,9 +117,9 @@ const Vans = {
             desc: 'VANS SIMPSONS X VANS FAMILY T-SHIRT',
             price: 119.99,
             image: [
-                `${imagesPrefix}/t5/pic1.jpg`,
-                `${imagesPrefix}/t5/pic2.jpg`,
-                `${imagesPrefix}/t5/pic3.jpg`,
+                `${imagesPrefix}/t5/pic1.png`,
+                `${imagesPrefix}/t5/pic2.png`,
+                `${imagesPrefix}/t5/pic3.png`,
             ],
             stock: {
                 type: 'size',
@@ -138,9 +138,9 @@ const Vans = {
             desc: 'THE SIMPSONS X VANS HOUSER BUTTONDOWN SHIRT',
             price: 189.99,
             image: [
-                `${imagesPrefix}/s1/pic1.jpg`,
-                `${imagesPrefix}/s1/pic2.jpg`,
-                `${imagesPrefix}/s1/pic3.jpg`,
+                `${imagesPrefix}/s1/pic1.png`,
+                `${imagesPrefix}/s1/pic2.png`,
+                `${imagesPrefix}/s1/pic3.png`,
             ],
             stock: {
                 type: 'size',
@@ -159,9 +159,9 @@ const Vans = {
             desc: 'THE SIMPSONS X VANS BART PULLOVER HOODIE',
             price: 189.99,
             image: [
-                `${imagesPrefix}/s1/pic1.jpg`,
-                `${imagesPrefix}/s1/pic2.jpg`,
-                `${imagesPrefix}/s1/pic3.jpg`,
+                `${imagesPrefix}/h1/pic1.png`,
+                `${imagesPrefix}/h1/pic2.png`,
+                `${imagesPrefix}/h1/pic3.png`,
             ],
             stock: {
                 type: 'size',
@@ -180,9 +180,9 @@ const Vans = {
             desc: 'Vans and National Geographic come together for a collection of footwear and apparel that celebrates over 130 years of the never-ending quest to explore our planet',
             price: 189.99,
             image: [
-                `${imagesPrefix}/s1/pic1.jpg`,
-                `${imagesPrefix}/s1/pic2.jpg`,
-                `${imagesPrefix}/s1/pic3.jpg`,
+                `${imagesPrefix}/t6/pic1.png`,
+                `${imagesPrefix}/t6/pic2.png`,
+                `${imagesPrefix}/t6/pic3.png`,
             ],
             stock: {
                 type: 'size',
@@ -201,9 +201,9 @@ const Vans = {
             desc: 'The Old Skool, Vans classic skate shoe and the first to bear the iconic side stripe',
             price: 189.99,
             image: [
-                `${imagesPrefix}/os1/pic1.jpg`,
-                `${imagesPrefix}/os1/pic2.jpg`,
-                `${imagesPrefix}/os1/pic3.jpg`,
+                `${imagesPrefix}/os1/pic1.png`,
+                `${imagesPrefix}/os1/pic2.png`,
+                `${imagesPrefix}/os1/pic3.png`,
             ],
             stock: {
                 type: 'size',
@@ -225,9 +225,9 @@ const Vans = {
             desc: 'The Old Skool, Vans classic skate shoe and the first to bear the iconic side stripe',
             price: 189.99,
             image: [
-                `${imagesPrefix}/os2/pic1.jpg`,
-                `${imagesPrefix}/os2/pic2.jpg`,
-                `${imagesPrefix}/os2/pic3.jpg`,
+                `${imagesPrefix}/os2/pic1.png`,
+                `${imagesPrefix}/os2/pic2.png`,
+                `${imagesPrefix}/os2/pic3.png`,
             ],
             stock: {
                 type: 'size',
@@ -249,9 +249,9 @@ const Vans = {
             desc: 'The Old Skool, Vans classic skate shoe and the first to bear the iconic side stripe',
             price: 189.99,
             image: [
-                `${imagesPrefix}/os3/pic1.jpg`,
-                `${imagesPrefix}/os3/pic2.jpg`,
-                `${imagesPrefix}/os3/pic3.jpg`,
+                `${imagesPrefix}/os3/pic1.png`,
+                `${imagesPrefix}/os3/pic2.png`,
+                `${imagesPrefix}/os3/pic3.png`,
             ],
             stock: {
                 type: 'size',
@@ -273,9 +273,9 @@ const Vans = {
             desc: 'The Old Skool, Vans classic skate shoe and the first to bear the iconic side stripe',
             price: 189.99,
             image: [
-                `${imagesPrefix}/os4/pic1.jpg`,
-                `${imagesPrefix}/os4/pic2.jpg`,
-                `${imagesPrefix}/os4/pic3.jpg`,
+                `${imagesPrefix}/os4/pic1.png`,
+                `${imagesPrefix}/os4/pic2.png`,
+                `${imagesPrefix}/os4/pic3.png`,
             ],
             stock: {
                 type: 'size',
@@ -297,9 +297,9 @@ const Vans = {
             desc: 'The Old Skool, Vans classic skate shoe and the first to bear the iconic side stripe',
             price: 189.99,
             image: [
-                `${imagesPrefix}/os5/pic1.jpg`,
-                `${imagesPrefix}/os5/pic2.jpg`,
-                `${imagesPrefix}/os5/pic3.jpg`,
+                `${imagesPrefix}/os5/pic1.png`,
+                `${imagesPrefix}/os5/pic2.png`,
+                `${imagesPrefix}/os5/pic3.png`,
             ],
             stock: {
                 type: 'size',

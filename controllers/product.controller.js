@@ -434,12 +434,13 @@ exports.getLabels = async (req, res, next) => {
     next(err)
   }
 }
-function setLabelByProductName(name, description, stock) {
+function setLabelByProductName(name, description, itemStock) {
   const prodName = String(name).toLowerCase();
   const desc = String(description).toLowerCase();
+  const stock = String(itemStock.type).toLowerCase();
   const label = [];
 
-  if (String(prodName).includes("computer") || String(desc).includes("computer")) {
+  if (String(prodName).includes("computer") || String(desc).includes("computer") || String(prodName).includes("notebook") || String(desc).includes("notebook")) {
     label.push("computer");
     label.push("electrical-equipment");
   }
@@ -464,7 +465,12 @@ function setLabelByProductName(name, description, stock) {
     label.push("electrical-equipment");
     label.push("audio-devices");
   }
-  if (String(prodName).includes("headphones") || String(desc).includes("headphones")) {
+  if (String(prodName).includes("headphone") || String(desc).includes("headphone")) {
+    label.push("headphones");
+    label.push("electrical-equipment");
+    label.push("audio-devices");
+  }
+  if (String(prodName).includes("earbuds") || String(desc).includes("earbuds")) {
     label.push("headphones");
     label.push("electrical-equipment");
     label.push("audio-devices");
@@ -479,7 +485,7 @@ function setLabelByProductName(name, description, stock) {
     label.push("electrical-equipment");
     label.push("audio-devices");
   }
-  if (String(prodName).includes("phone") || String(desc).includes("phone")) {
+  if ((String(prodName).includes("phone") || String(desc).includes("phone")) && !label.includes("headphones")) {
     label.push("phone");
     label.push("electrical-equipment");
   }
@@ -500,7 +506,8 @@ function setLabelByProductName(name, description, stock) {
     label.push("placement");
     label.push("kitchen-tools");
   }
-  if (String(prodName).includes("table") || String(desc).includes("table")) {
+  if ((String(prodName).includes("table") || String(desc).includes("table")) &&
+    (!String(desc).includes("portable") && !String(desc).includes("mountable"))) {
     label.push("table");
     label.push("home-design");
     label.push("furniture");
@@ -511,6 +518,11 @@ function setLabelByProductName(name, description, stock) {
   }
   if (String(prodName).includes("chair") || String(desc).includes("chair")) {
     label.push("chair");
+    label.push("home-design");
+    label.push("furniture");
+  }
+  if (String(prodName).includes("shelf") || String(desc).includes("shelf")) {
+    label.push("shelf");
     label.push("home-design");
     label.push("furniture");
   }
@@ -544,8 +556,14 @@ function setLabelByProductName(name, description, stock) {
     label.push("fashion");
     label.push("fashion-accessories")
   }
-  if (String(prodName).includes("trainers") || String(desc).includes("trainers")) {
+  if (String(prodName).includes("trainer") || String(desc).includes("trainer")) {
     label.push("trainers");
+    label.push("shoe");
+    label.push("fashion");
+    label.push("fashion-accessories")
+  }
+  if ((String(prodName).includes("boot") || String(desc).includes("boot")) && String(stock).includes("size")) {
+    label.push("boots");
     label.push("shoe");
     label.push("fashion");
     label.push("fashion-accessories")
@@ -560,9 +578,20 @@ function setLabelByProductName(name, description, stock) {
   }
   if (String(prodName).includes("sandal") || String(desc).includes("sandal")) {
     label.push("sandal");
+    label.push("shoe");
     label.push("fashion");
   }
-  if (!String(desc).includes("monitor") && !String(desc).includes("screen") && !String(desc).includes("tv") && String(stock.type).includes("size")) {
+  if ((String(prodName).includes("sliders") || String(desc).includes("sliders")) && String(stock).includes("size")) {
+    label.push("flipflops");
+    label.push("sliders");
+    label.push("fashion");
+  }
+  if ((String(prodName).includes("flops") || String(desc).includes("flops")) && String(stock).includes("size")) {
+    label.push("flipflops");
+    label.push("sliders");
+    label.push("fashion");
+  }
+  if (!String(desc).includes("monitor") && !String(desc).includes("screen") && !String(desc).includes("tv") && String(stock).includes("size")) {
     label.push("fashion");
   }
   if (String(prodName).includes("shorts") || String(desc).includes("shorts")) {

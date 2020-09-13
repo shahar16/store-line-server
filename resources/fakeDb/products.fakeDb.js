@@ -1,4 +1,4 @@
-const WoodWorkStore = require('../demo_stores/woodWorkStore')
+const DemoStores = require('../demo_stores/demoStores');
 
 const productNames = ['Computer 13"', 'Computer 15"', 'Computer 17"', 'Pot 2L', 'Pot 3L', 'Keybord', 'Mouse', 'Speaker',
   'Screen 21"', 'Screen 24"', 'Screen 27"', 'Tent 3 people', 'Tent 4 people', 'Iphone', 'Drill', 'Bottle 1L', 'Bottle 1.5L',
@@ -16,10 +16,10 @@ const productsDesc = [
 ]
 
 const stock = {
-  type:       'color',
+  type: 'color',
   quantities: {
-    'black':  50,
-    'white':  60,
+    'black': 50,
+    'white': 60,
     'silver': 70
   }
 }
@@ -36,18 +36,18 @@ productNames.forEach((productName, index) => {
     storeId = counter
     let images = [
       `${imagesPrefix}/${productFolder}/pic${counter % numberOfImages + 1}.jpg`,
-      `${imagesPrefix}/${productFolder}/pic${( counter + 1 ) % numberOfImages + 1}.jpg`,
-      `${imagesPrefix}/${productFolder}/pic${( counter + 2 ) % numberOfImages + 1}.jpg`
+      `${imagesPrefix}/${productFolder}/pic${(counter + 1) % numberOfImages + 1}.jpg`,
+      `${imagesPrefix}/${productFolder}/pic${(counter + 2) % numberOfImages + 1}.jpg`
     ]
     let product = {
-      name:    productName,
-      desc:    desc,
-      price:   ( ( index + 1 ) * 100 ),
-      sn:      shortid.generate(),
-      image:   images,
+      name: productName,
+      desc: desc,
+      price: ((index + 1) * 100),
+      sn: shortid.generate(),
+      image: images,
       storeID: storeId,
-      stock:   stock,
-      fakeDB:  true
+      stock: stock,
+      fakeDB: true
     }
     if (++counter > numOfStores) {
       counter = 1
@@ -56,12 +56,13 @@ productNames.forEach((productName, index) => {
   })
 })
 
-const woodStoreProducts = WoodWorkStore['products']
-
-for (const [key, value] of Object.entries(woodStoreProducts)) {
-  let product = value
-  product['fakeDB'] = true
-  productsDb.push(product)
-}
+DemoStores.forEach(singleStore => {
+  const storeProducts = singleStore['products'];
+  for (const [key, value] of Object.entries(storeProducts)) {
+    let product = value
+    product['fakeDB'] = true
+    productsDb.push(product)
+  }
+})
 
 module.exports = productsDb
