@@ -6,7 +6,7 @@ const appDB = require('../resources/fakeDb/fakeDb')
 //mongoose model
 const User = require('../models/user.model')
 
-function getToken (email) {
+function getToken(email) {
   return jwt.sign(
     { email: email },
     'GuyRonenIsMyBestFriend',
@@ -22,25 +22,25 @@ exports.login = async (req, res, next) => {
     }
 
     const {
-            email,
-            password
-          } = req.body
-    console.log(`Login:: email: ${email}`)
-
-    const user = await User.findOne({ email: email })
+      email,
+      password
+    } = req.body
+    const lowerCaseEmail = String(email).toLowerCase();
+    console.log(`Login:: email: ${lowerCaseEmail}`)
+    const user = await User.findOne({ email: lowerCaseEmail })
     if (!user) {
-      throw new Error(`User: ${email} did not exists`)
+      throw new Error(`User: ${lowerCaseEmail} did not exists`)
     }
     // bcrypt is hashing the password you got from the client and compare it to the hashed password in DB.
     const isEqual = await bcrypt.compare(password, user.password)
-    const token = getToken(email)
+    const token = getToken(lowerCaseEmail)
     const expiresTimeInMiliseconds = 1000 * 60 * 60
     if (isEqual) {
       return res.status(200).json({
-        token:                    token,
+        token: token,
         expiresTimeInMiliseconds: expiresTimeInMiliseconds,
-        message:                  'User Logged in successfully.',
-        user:                     user
+        message: 'User Logged in successfully.',
+        user: user
       })
     } else {
       throw new Error('Wrong password!')
@@ -55,52 +55,53 @@ exports.login = async (req, res, next) => {
 exports.register = async (req, res, next) => {
   try {
     console.log(req.body)
-    console.log(( Object.entries(req.body) ))
+    console.log((Object.entries(req.body)))
     if (Object.entries(req.body).length === 0) {
       throw new Error('Request body is empty.')
     }
 
     const {
-            email,
-            password,
-            firstName,
-            lastName,
-            city,
-            street,
-            houseNum,
-            address,
-          } = req.body
-    console.log(`Register:: email: ${email}`)
+      email,
+      password,
+      firstName,
+      lastName,
+      city,
+      street,
+      houseNum,
+      address,
+    } = req.body
+    const lowerCaseEmail = String(email).toLowerCase();
+    console.log(`Register:: email: ${lowerCaseEmail}`)
 
-    const userExists = await User.findOne({ email: email })
+    const userExists = await User.findOne({ email: lowerCaseEmail })
     if (userExists) {
-      throw new Error(`User: ${email} already exist.`)
+      throw new Error(`User: ${lowerCaseEmail} already exist.`)
     }
 
     const newAddress = address || {
-      city:     city,
-      street:   street,
+      city: city,
+      street: street,
       houseNum: houseNum
     }
 
     const hashPassword = await bcrypt.hash(password, 12)
     const newUser = new User({
-      email:                  email,
-      password:               hashPassword,
-      firstName:              firstName,
-      lastName:               lastName,
+      email: lowerCaseEmail,
+      password: hashPassword,
+      firstName: firstName,
+      lastName: lastName,
       defaultShippingAddress: newAddress,
-      cartID:                 ''
+      cartID: ''
     })
     await newUser.save()
 
     const expiresTimeInMiliseconds = 1000 * 60 * 60
-    const token = getToken(email)
+    const token = getToken(lowerCaseEmail)
 
     const registerSuccessMsg = {
-      message:                  `User: ${email} created successfully.`,
-      user:                     newUser,
-      token:                    token,
+      message: `User: ${lowerCaseEmail} created successfully.`,
+      user: newUser,
+      token: token,
       expiresTimeInMiliseconds: expiresTimeInMiliseconds
     }
 
@@ -126,7 +127,7 @@ exports.seedUsers = async (req, res, next) => {
     { email: 'non@eratEtiam.ca', password: '16070401', firstName: 'djhqj', lastName: 'bbbcm' },
     { email: 'pulvinar@pedesagittis.ca', password: '16370206', firstName: 'djhqj', lastName: 'bbbcm' },
     {
-      email:    'vehicula.et.rutrum@DonectinciduntDonec.co.uk', password: '16741211', firstName: 'djhqj',
+      email: 'vehicula.et.rutrum@DonectinciduntDonec.co.uk', password: '16741211', firstName: 'djhqj',
       lastName: 'bbbcm'
     },
     { email: 'euismod@liberodui.ca', password: '16190405', firstName: 'djhqj', lastName: 'bbbcm' },
@@ -138,7 +139,7 @@ exports.seedUsers = async (req, res, next) => {
     { email: 'consectetuer.ipsum@risusIn.com', password: '16180129', firstName: 'djhqj', lastName: 'bbbcm' },
     { email: 'congue.In@NullafacilisiSed.org', password: '16700625', firstName: 'djhqj', lastName: 'bbbcm' },
     {
-      email:    'turpis.nec.mauris@odioauctorvitae.co.uk', password: '16510420', firstName: 'djhqj',
+      email: 'turpis.nec.mauris@odioauctorvitae.co.uk', password: '16510420', firstName: 'djhqj',
       lastName: 'bbbcm'
     },
     { email: 'magna.et.ipsum@pede.org', password: '16051114', firstName: 'djhqj', lastName: 'bbbcm' },
@@ -147,14 +148,14 @@ exports.seedUsers = async (req, res, next) => {
   users.forEach(async el => {
     const userExists = await User.findOne({ email: el.email })
     if (userExists) {
-      console.log(`User: ${el.email} is already exists.`)
+      console.log(`User: ${String(el.email).toLowerCase()} is already exists.`)
     }
     const hashPassword = await bcrypt.hash(el.password, 12)
     const newUser = new User({
-      email:     el.email,
-      password:  hashPassword,
+      email: String(el.email).toLowerCase(),
+      password: hashPassword,
       firstName: el.firstName,
-      lastName:  el.lastName
+      lastName: el.lastName
     })
 
     try {
@@ -185,8 +186,8 @@ exports.addDbUsers = async (req, res, next) => {
       message: `${fn} db users has been added successfully`
     })
   } catch (err) {
-    err.message = ( `${fn}: ` + err.message ) ||
-      ( `${fn}: failed to add new db Users` )
+    err.message = (`${fn}: ` + err.message) ||
+      (`${fn}: failed to add new db Users`)
     next(err)
   }
 }
@@ -216,13 +217,13 @@ exports.editUser = async (req, res, next) => {
     const email = req.userEmail || 'shaharyig@gmail.com'
 
     const {
-            password,
-            firstName,
-            lastName,
-            city,
-            street,
-            houseNum
-          } = req.body
+      password,
+      firstName,
+      lastName,
+      city,
+      street,
+      houseNum
+    } = req.body
     console.log(`update:: email: ${email}`)
 
     const userExists = await User.findOne({ email: email })
@@ -231,17 +232,17 @@ exports.editUser = async (req, res, next) => {
     }
 
     const address = {
-      city:     city,
-      street:   street,
+      city: city,
+      street: street,
       houseNum: houseNum
     }
 
     const hashPassword = password ? await bcrypt.hash(password, 12) : userExists.password
     await userExists.updateOne({
-      email:                  email,
-      password:               hashPassword,
-      firstName:              firstName,
-      lastName:               lastName,
+      email: email,
+      password: hashPassword,
+      firstName: firstName,
+      lastName: lastName,
       defaultShippingAddress: address
     })
 

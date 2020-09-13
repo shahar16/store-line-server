@@ -8,7 +8,8 @@ module.exports = (req, res, next) => {
       throw new Error('Token did not sent properly in the request. please make sure that the token is like \'Bearer {TOKEN}\'')
     }
     let decodedToken = jwt.verify(token, 'GuyRonenIsMyBestFriend')
-    req.userEmail = decodedToken.email
+    let email = decodedToken.email
+    req.userEmail = String(email).toLowerCase();
     next()
   } catch (err) {
     err.message = err.message || 'Error with Admin token isAuth.'
