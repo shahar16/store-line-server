@@ -1,5 +1,5 @@
 const usersDb = require('./users.fakeDb')
-const WoodWorkStore = require('../demo_stores/woodWorkStore')
+const DemoStores = require('../demo_stores/demoStores');
 const storesNames = ['KSP', 'Ivory', 'Home Center', 'ACE', 'Shufersal']
 const storesDesc = [
   'This is the first description, this is a description for stores not for products, this description should be long.',
@@ -16,32 +16,36 @@ storesNames.forEach((productName, index) => {
   storesDesc.forEach((desc) => {
     let images = [
       `${imagesPrefix}pic${index % 8 + 1}.jpg`,
-      `${imagesPrefix}pic${( index + 1 ) % 8 + 1}.jpg`,
-      `${imagesPrefix}pic${( index + 2 ) % 8 + 1}.jpg`
+      `${imagesPrefix}pic${(index + 1) % 8 + 1}.jpg`,
+      `${imagesPrefix}pic${(index + 2) % 8 + 1}.jpg`
     ]
     let store = {
-      storeID:  counter,
-      name:     productName,
-      owner:    usersDb[counter].email,
-      desc:     desc,
-      image:    images,
+      storeID: counter,
+      name: productName,
+      owner: usersDb[counter].email,
+      desc: desc,
+      image: images,
       products: {},
-      contact:  {
-        email:       usersDb[counter].email,
+      contact: {
+        email: usersDb[counter].email,
         phoneNumber: '0555555',
-        adress:      {
-          city:     'Tel Aviv',
-          street:   'street',
+        adress: {
+          city: 'Tel Aviv',
+          street: 'street',
           houseNum: 41,
         }
       },
-      fakeDB:   true
+      fakeDB: true
     }
     counter++
     storesDb.push(store)
   })
 })
-console.log(WoodWorkStore['store'])
-storesDb.push(WoodWorkStore['store'])
+
+DemoStores.forEach(item => {
+  let singleStore = item['store']
+  console.log(singleStore);
+  storesDb.push(singleStore)
+})
 
 module.exports = storesDb
