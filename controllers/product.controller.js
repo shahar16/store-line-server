@@ -412,6 +412,26 @@ exports.search = async (req, res, next) => {
     next(err)
   }
 }
+
+exports.getLabelProducts = async (req, res, next) => {
+  const fn = CTRL_NAME + '::getLabelProducts'
+
+  try {
+    const label = req.query.label
+    const products = await Product.find()
+
+    if (!products) {
+      throw new Error('Did not found any products')
+    }
+    const productsNames = products.filter((product) => product.label.includes(label))
+
+    return res.status(200).json(productsNames)
+  } catch (err) {
+    err.message = err.message || (`${fn}: failed get products list`)
+    next(err)
+  }
+}
+
 exports.getLabels = async (req, res, next) => {
   const fn = CTRL_NAME + '::getLabels'
 

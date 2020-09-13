@@ -615,3 +615,24 @@ exports.getOwner = async (req, res, next) => {
     next(err)
   }
 }
+
+exports.getTopStores = async (req, res, next) => {
+  const fn = CTRL_NAME + '::getStores'
+  try {
+    const topStores = ["wood-work shop", "Apple", "Shoes Store", "Vans Official store", "JBL store", "Samsung Official store", "Harman/Kardon"]
+
+    let stores = await Store.find()
+    stores = stores.filter((store) => topStores.includes(store.name))
+    stores = stores.map(store => {
+      return {
+        name: store.name,
+        storeID: store.storeID
+      }
+    })
+
+    return res.status(200).json(stores)
+  } catch (err) {
+    err.message = err.message || ( `${fn}: failed to add new db Products` )
+    next(err)
+  }
+}

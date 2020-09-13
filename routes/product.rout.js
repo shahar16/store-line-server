@@ -10,6 +10,7 @@ router.get('/getProductsList', productController.getProductsList)
 router.get('/search', productController.search)
 router.get('/getLabels', productController.getLabels)
 router.get('/getSimilarProducts', labelsController.getSimilarProducts)
+router.get('/getLabelProducts', productController.getLabelProducts)
 
 
 module.exports = router
