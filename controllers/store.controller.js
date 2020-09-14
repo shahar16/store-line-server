@@ -15,9 +15,9 @@ exports.addNewStore = async (req, res, next) => {
       throw new Error('Request body is empty.')
     }
 
-    if (!req.files) {
-      throw new Error('Image did not received.')
-    }
+    // if (!req.files) {
+    //   throw new Error('Image did not received.')
+    // }
 
     const {
             name,
@@ -30,7 +30,7 @@ exports.addNewStore = async (req, res, next) => {
     const newStoreID = fakeDB ? storeID : shortid.generate()
     // console.log(req.id);
     const contactAsJson = fakeDB ? contact : JSON.parse(contact)
-    const image = fakeDB ? req.file.path : req.files.map(file => file.path)
+    const image = fakeDB ? req.file.path : []
 
     const storeDBObj = await Store.findOne({ storeID: newStoreID })
     const userDBObj = await User.findOne({ email: owner })
