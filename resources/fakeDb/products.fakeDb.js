@@ -1,7 +1,7 @@
 const DemoStores = require('../demo_stores/demoStores');
 
-const productNames = ['Computer 13"', 'Computer 15"', 'Computer 17"', 'Keybord', 'Mouse', 'Speaker',
-  'Screen 21"', 'Screen 24"', 'Drill',
+const productNames = ['Computer 15"', 'Computer 17"', 'keyboard', 'Mouse', 'Speaker',
+  'Screen 21"', 'Screen 24"',
   'Dresser', 'Frame', 'Partition', 'Placement', 'Footstool', 'Knife', 'Rug', 'Chair', 'Table', 'Lamp']
 const shortid = require('shortid')
 

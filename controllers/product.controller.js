@@ -476,7 +476,7 @@ function setLabelByProductName(name, description, itemStock) {
     label.push("keyboard");
     label.push("computer-accessories");
   }
-  if (String(prodName).includes("computer mouse") || String(desc).includes("mouse")) {
+  if (String(prodName).includes("mouse") || String(desc).includes("mouse")) {
     label.push("computer mouse");
     label.push("computer-accessories");
   }
@@ -660,7 +660,6 @@ function setLabelByProductName(name, description, itemStock) {
     label.push("measure");
     label.push("working-tools");
   }
-
   if (String(prodName).includes("glue") || String(desc).includes("glue")) {
     label.push("wood-glue");
     label.push("working-tools");

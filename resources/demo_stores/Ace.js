@@ -7,7 +7,7 @@ const Ace = {
 
   store: {
     storeID:  storeID,
-    name:     'Ace',
+    name:     'Working Tools Store',
     owner:    'shaharyig@gmail.com',
     desc:     'In this store you will find all the working tools you need.',
     products: {},
@@ -235,6 +235,24 @@ const Ace = {
         type:       'unique',
         quantities: {
           'one size': 20
+        }
+      }
+    },
+    Bosh_Drill:          {
+      sn:      shortid.generate(),
+      storeID: storeID,
+      name:    'Bosh drill',
+      desc:    'Bosh drill PSR - 1080',
+      price:   29,
+      image:   [
+        `${imagesPrefix}/Bosh_Drill/pic1.jpg`,
+        `${imagesPrefix}/Bosh_Drill/pic2.jpg`,
+        `${imagesPrefix}/Bosh_Drill/pic3.jpg`,
+      ],
+      stock:   {
+        type:       'unique',
+        quantities: {
+          'green': 20
         }
       }
     }
