@@ -1,6 +1,6 @@
 const usersDb = require('./users.fakeDb')
 const DemoStores = require('../demo_stores/demoStores');
-const storesNames = ['KSP', 'Ivory', 'Home Center', 'ACE', 'Shufersal']
+const storesNames = ['KSP', 'Ivory', 'Home Center', 'Shufersal']
 const storesDesc = [
   'This is the first description, this is a description for stores not for products, this description should be long.',
   'This is the second description, its a little bit longer, this is a description for stores not for products, this description should be long.',

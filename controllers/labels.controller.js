@@ -50,6 +50,7 @@ exports.getSimilarProducts = async function (req, res, next) {
                 }
             }
         })
+        //TODO: sort by rank
         return res.status(200).json(similarProductsArr);
     } catch (err) {
         err.message = err.message ||

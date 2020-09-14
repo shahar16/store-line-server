@@ -1,7 +1,7 @@
 const DemoStores = require('../demo_stores/demoStores');
 
-const productNames = ['Computer 13"', 'Computer 15"', 'Computer 17"', 'Pot 2L', 'Pot 3L', 'Keybord', 'Mouse', 'Speaker',
-  'Screen 21"', 'Screen 24"', 'Screen 27"', 'Tent 3 people', 'Tent 4 people', 'Iphone', 'Drill', 'Bottle 1L', 'Bottle 1.5L',
+const productNames = ['Computer 13"', 'Computer 15"', 'Computer 17"', 'Keybord', 'Mouse', 'Speaker',
+  'Screen 21"', 'Screen 24"', 'Drill',
   'Dresser', 'Frame', 'Partition', 'Placement', 'Footstool', 'Knife', 'Rug', 'Chair', 'Table', 'Lamp']
 const shortid = require('shortid')
 
@@ -25,7 +25,7 @@ const stock = {
 }
 const imagesPrefix = 'uploads/images'
 let productsDb = []
-let numOfStores = 25
+let numOfStores = 20
 let counter = 1
 let numberOfImages = 3
 let storeId
