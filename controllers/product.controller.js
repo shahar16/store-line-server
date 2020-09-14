@@ -622,6 +622,49 @@ function setLabelByProductName(name, description, itemStock) {
     label.push("trousers");
     label.push("fashion");
   }
+  if (String(prodName).includes("saw") || String(desc).includes("saw")) {
+    label.push("saw");
+    label.push("working-tools");
+    label.push("wood");
+    label.push("art");
+  }
+  if (String(prodName).includes("hammer") || String(desc).includes("hammer")) {
+    label.push("hammer");
+    label.push("working-tools");
+  }
+  if (String(prodName).includes("screws") || String(desc).includes("screws")) {
+    label.push("screws");
+    label.push("working-tools");
+    label.push("wood");
+    label.push("art");
+  }
+  if (String(prodName).includes("drill") || String(desc).includes("drill")) {
+    label.push("drill");
+    label.push("working-tools");
+    label.push("wood");
+    label.push("art");
+    label.push("electrical-equipment");
+  }
+  if (String(prodName).includes("router") || String(desc).includes("router")) {
+    label.push("router");
+    label.push("working-tools");
+    label.push("wood");
+    label.push("art");
+    label.push("electrical-equipment");
+  }
+  if (String(prodName).includes("pliers") || String(desc).includes("pliers")) {
+    label.push("pliers");
+    label.push("working-tools");
+  }
+  if (String(prodName).includes("measure") || String(desc).includes("measure")) {
+    label.push("measure");
+    label.push("working-tools");
+  }
+
+  if (String(prodName).includes("glue") || String(desc).includes("glue")) {
+    label.push("wood-glue");
+    label.push("working-tools");
+  }
   return label;
 }
 
