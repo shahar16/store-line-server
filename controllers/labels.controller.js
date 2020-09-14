@@ -50,7 +50,11 @@ exports.getSimilarProducts = async function (req, res, next) {
                 }
             }
         })
-        //TODO: sort by rank
+
+        similarProductsArr = similarProductsArr.sort((productA, productB) => {
+            return productB.rank - productA.rank
+        })
+
         return res.status(200).json(similarProductsArr);
     } catch (err) {
         err.message = err.message ||
