@@ -105,7 +105,7 @@ const WoodWorkStore = {
       sn:      shortid.generate(),
       storeID: storeID,
       name:    'Wooden Book',
-      desc:    'Journal , Tree Of Life , Diaries , Wooden Book , Notebooks , Personal Diary , Wood Book Cover , Unique Gifts , Smoked Poplar , Coptic Stitch',
+      desc:    'Journal, Tree Of Life, Diaries, Wooden Book, Personal Diary, Wood Book Cover, Unique Gifts, Smoked Poplar, Coptic Stitch',
       price:   120,
       image:   [
         `${imagesPrefix}/WoodenBook/pic1.jpg`,

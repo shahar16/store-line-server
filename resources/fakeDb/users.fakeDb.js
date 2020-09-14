@@ -12,7 +12,7 @@ let usersDb = []
 firstNames.forEach((firatName) => {
   lastNames.forEach((lastName) => {
     let user = {
-      email:       `${firatName}.${lastName}@gmail.com`,
+      email:       `${firatName}.${lastName}@gmail.com`.toLowerCase(),
       password:    password,
       firstName:   firatName,
       lastName:    lastName,
